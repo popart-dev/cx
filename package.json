@@ -1,0 +1,37 @@
+{
+    "name"          : "cx",
+    "description"   : "Cloud transfer utility: for transfering files/blobs to and from the cloud.",
+    "author"        : "Pop Art (http://popart.com)",
+    "contributors"  : [
+        "Ethan Brown <ethan.brown@popart.com>"
+    ],
+    "licenses"      : [
+        { "type": "GPL", "url": "http://www.gnu.org/licenses/gpl.html" }
+    ],
+    "version"       : "0.0.1beta",
+    "keywords"      : [
+        "azure",
+        "cloud",
+        "file"
+    ],
+    "repository"    : "https://github.com/popart-dev/cx.git",
+    "bin"           : {
+        "cxs" : "./app/cxs.js"
+    },
+
+
+    "engines": {
+        "node": ">=0.8"
+    },
+
+     "dependencies": {
+        "async"     : "~0.2",
+        "glob"      : "3.x",
+        "express"   : "3.x",
+        "semver"    : "1.x",
+        "handlebars": "1.x",
+        "azure"     : "~0.7",
+        "nomnom"    : "~1"
+    }
+
+}

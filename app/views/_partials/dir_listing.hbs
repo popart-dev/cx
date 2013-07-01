@@ -1,0 +1,12 @@
+<div class="fileDropRoot" data-path="{{path}}">
+	<b>{{path}}</b>
+	<ul>
+		{{#each entries}}
+			{{#if isDirectory}}
+				<li class="dir-entry dir" data-path="{{path}}"><a href="#" data-path="{{path}}">{{name}}</a></li>
+			{{else}}
+				<li class="dir-entry file" data-path="{{path}}">{{name}}</li>
+			{{/if}}
+		{{/each}}
+	</ul>
+</div>

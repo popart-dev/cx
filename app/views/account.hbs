@@ -1,0 +1,114 @@
+
+<div class="row">
+
+	<div class="span6">
+		<h3>Local Files</h3>
+		<div id="localFiles">
+		</div>
+	</div>
+
+	<div class="span6">
+		<h3>Azure Storage</h3>
+		<div id="azureStorage">
+		</div>
+	</div>
+
+</div>
+
+<script>
+
+	// hooray for peek!  the ever-loving companion of pop
+	Array.prototype.peek = function(){
+		if( this.length===0 ) return null;
+		return this[this.length-1];
+	};
+
+	function getPathStack( $target ) {
+		var $root = $target.closest( '.fileDropRoot' );
+		if( !$root.data('pathStack') ) $root.data('pathStack',[]);
+		return $root.data('pathStack');
+	}
+
+	function azureDrop( evt, ui ) {
+		var $target = $(evt.target);
+		var $root = $target.closest( '.fileDropRoot' );
+		$root.find().removeClass('dropHint');
+		if( ui.draggable.hasClass('dir') ) {
+			alert( 'Transferring directories currently not suported.' );
+			return;
+		}
+		var pathStack = getPathStack( $target );
+		if( pathStack.peek()!==$target.data('path') ) return;		// we're not the innermost drop target; nothing to do
+		var src = $(ui.draggable).data('path');
+		var dstDir = pathStack.pop();
+		var dst = dstDir + src.match(/\/([^/]+)$/)[1];
+		pathStack = [];	// reset the path stack
+		$.ajax( '/api/azure/upload?src=' + encodeURIComponent(src) + '&dst=' + encodeURIComponent(dst), {success:function(){
+			refreshAzure( $root.data('path') );
+		}});
+	}
+
+	function dropTargetOver( evt, ui ) {
+		$target = $(evt.target);
+		getPathStack( $target ).push( $target.data('path') );
+		$target.addClass( 'dropHint' );
+	}
+
+	function dropTargetOut( evt, ui ) {
+		$target = $(evt.target);
+		// TODO: this is not working reliably.  it functions, but doing some console logging is not reassuring
+		getPathStack( $target ).pop();
+		$target.removeClass( 'dropHint' );
+	}
+
+	function refreshDragDrop() {
+		$('#localFiles .dir-entry').draggable({
+			helper: 'clone'
+		});
+		// we have to re-define the droppable every time as well
+		$('#azureStorage .fileDropRoot').droppable({
+			accept: '.dir-entry',
+			drop: azureDrop,
+			over: dropTargetOver,
+			out: dropTargetOut,
+		});
+		$('#azureStorage .fileDropRoot .dir-entry.dir').droppable({
+			accept: '.dir-entry',
+			drop: azureDrop,
+			over: dropTargetOver,
+			out: dropTargetOut,
+		});
+	}
+
+	function refreshLocal(path) {
+		if( !path ) path = '~';
+		$('#localFiles').load( '/partials/local/dir?path=' + encodeURIComponent(path), null, function() {
+			refreshDragDrop();
+		} );
+	}
+
+	function refreshAzure(path) {
+		if( !path ) path = '/';
+		$('#azureStorage').load( '/partials/azure/dir?path=' + encodeURIComponent(path), null, function() {
+			refreshDragDrop();
+		} );
+	}
+
+	$(document).ready(function() {
+		'use strict';
+
+		refreshLocal();
+		refreshAzure();
+
+		$('#localFiles').on('click','a',function(){
+			var path = $(this).data('path');
+			if( path ) refreshLocal(path);
+		});
+
+		$('#azureStorage').on('click','a',function(){
+			var path = $(this).data('path');
+			if( path ) refreshAzure(path);
+		});
+
+	});
+</script>

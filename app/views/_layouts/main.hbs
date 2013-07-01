@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head lang="en">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>{{> page/title}}</title>
+
+	<!-- jquery -->
+	<script src="/vendor/jquery-1.10.1.min.js"></script>
+
+	<!-- jquery ui -->
+	<link href="/vendor/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<script src="/vendor/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
+
+	<!-- bootstrap -->
+	<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap-responsive.css">
+	<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+	<style>
+		.dir-entry.dir {
+		}
+
+		.fileDropRoot {
+			border: solid 3px transparent;
+			padding: 12px;
+		}
+
+		.fileDropRoot.dropHint {
+			border: solid 3px blue;
+		}
+
+		.dir-entry.dropHint {
+			background-color: #ddd;
+		}
+
+	</style>
+
+</head>
+<body>
+
+	<div class="container-fluid">
+		{{{body}}}
+	</div>
+
+</body>
+</html>

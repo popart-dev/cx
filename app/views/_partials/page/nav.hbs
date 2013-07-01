@@ -1,0 +1,16 @@
+<div class="well sidebar-nav">
+	<ul class="nav nav-list">
+		{{#each nav}}
+		<li class="nav-header">
+			<a href="{{link}}" data-toggle="collapse" data-target="#nav-{{name}}">{{name}}</a><button>&plus;</button>
+			{{#if children}}
+				<ul id="nav-{{name}}" class="collapse">
+					{{#each children}}
+					<li><a href="{{link}}" class="content-node">{{name}}</a></li>
+					{{/each}}
+				</ul>
+			{{/if}}
+		</li>
+		{{/each}}
+	</ul>
+</div>
