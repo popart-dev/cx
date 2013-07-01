@@ -1,15 +1,15 @@
 
 <div class="row">
 
-	<div class="span6">
+	<div class="span6 dirContainer">
 		<h3>Local Files</h3>
-		<div id="localFiles">
+		<div id="localFiles" class="dirContent">
 		</div>
 	</div>
 
-	<div class="span6">
+	<div class="span6 dirContainer">
 		<h3>Azure Storage</h3>
-		<div id="azureStorage">
+		<div id="azureStorage" class="dirContent">
 		</div>
 	</div>
 
@@ -41,6 +41,10 @@
 		if( pathStack.peek()!==$target.data('path') ) return;		// we're not the innermost drop target; nothing to do
 		var src = $(ui.draggable).data('path');
 		var dstDir = pathStack.pop();
+		if( dstDir === '/' ) {
+			alert( 'You must transfer files into a container.' );	
+			return;
+		}
 		var dst = dstDir + src.match(/\/([^/]+)$/)[1];
 		pathStack = [];	// reset the path stack
 		$.ajax( '/api/azure/upload?src=' + encodeURIComponent(src) + '&dst=' + encodeURIComponent(dst), {success:function(){
@@ -106,8 +110,19 @@
 		});
 
 		$('#azureStorage').on('click','a',function(){
+			var action = $(this).data('action');
 			var path = $(this).data('path');
-			if( path ) refreshAzure(path);
+			var $root = $(this).closest( '.fileDropRoot' );
+			if( action==='delete' ) {
+				console.log( 'deleting ' + path );
+				if( path ) {
+					$.ajax( '/api/azure/delete?path=' + encodeURIComponent(path), {success:function(){
+						refreshAzure( $root.data('path') );
+					}});
+				}
+			} else {
+				if( path ) refreshAzure(path);
+			}
 		});
 
 	});

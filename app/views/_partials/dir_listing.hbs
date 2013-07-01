@@ -1,12 +1,15 @@
 <div class="fileDropRoot" data-path="{{path}}">
-	<b>{{path}}</b>
-	<ul>
+	<div class="dir-header">{{path}}</div>
+	<div class="dir-entries">
 		{{#each entries}}
 			{{#if isDirectory}}
-				<li class="dir-entry dir" data-path="{{path}}"><a href="#" data-path="{{path}}">{{name}}</a></li>
+				<div class="dir-entry dir" data-path="{{path}}"><a href="#" data-path="{{path}}">{{name}}</a></div>
 			{{else}}
-				<li class="dir-entry file" data-path="{{path}}">{{name}}</li>
+				<div class="dir-entry file" data-path="{{path}}">
+					{{name}} 
+					<a href="#" data-path="{{path}}" data-action="delete"><i class="icon-remove"></i></a>
+				</div>
 			{{/if}}
 		{{/each}}
-	</ul>
+	</div>
 </div>

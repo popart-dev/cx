@@ -312,13 +312,47 @@ app.get('/api/azure/upload', function(req,res){
   });
 });
 
+// Array.prototype.remove found here: http://stackoverflow.com/questions/500606/javascript-array-delete-elements
+// Array Remove - By John Resig (MIT Licensed)
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+
+app.get('/api/azure/delete', function(req,res) {
+  var account = getCurrentAzureAccount(req);
+  var blobService = azure.createBlobService( account.name, account.key );
+  var azureParts = getAzureParts( req.query.path );
+  if( azureParts.type === 'file' ) {
+
+    blobService.deleteBlob( azureParts.container, azureParts.azureName, function( error, isSuccessful ) {
+      if( !isSuccessful ) {
+        res.json( { error: error } );
+      } else {
+        if( _azureCache[account.name] && _azureCache[account.name][azureParts.container] && _azureCache[account.name][azureParts.container].files ) {
+          var idx = _azureCache[account.name][azureParts.container].files.indexOf( azureParts.azureName );
+          idx>=0 && _azureCache[account.name][azureParts.container].files.remove( idx );
+        }
+        res.json( { message: 'File deleted successfully.' } );
+      }
+    });
+  } else {
+    var msg = 'Unable to delete blob ' + req.query.path;
+    console.warn( msg );
+    res.json( { error: msg } );
+  }
+});
+
 app.get('/account/:name', function(req,res) {
  res.render('account');
 });
 
 app.get('/partials/local/dir', function(req,res){
   var path = req.query.path;
-  res.render('_partials/dir_listing', getLocalDir(path));
+  var dir = getLocalDir(path);
+  dir.layout = false;
+  res.render('_partials/dir_listing', dir);
 });
 
 app.get('/partials/azure/dir', function(req,res){
