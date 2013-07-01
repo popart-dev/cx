@@ -15,8 +15,8 @@ Browser-based Client
 Currently, the only cx UI available is a browser-based interface, courtesy [Express](http://aws.amazon.com/s3/).
 In the future, a command-line client, as well as a JavaScript module is planned.
 
-Usage
------
+Installing cx
+-------------
 To use cx, simply install it by typing `sudo npm install -g cx` on the terminal (you may need to
 [install Node](http://nodejs.org/) first).  You will be prompted for your administrator password.
 You may see some warnings in red as you install, and you may safely ignore those: only errors will
@@ -35,7 +35,7 @@ drag the filename over to the Azure storage area.  Note that you may drag into e
 Azure storage container or virtual directory, or a subdirectory.  If you drag into a subdirectory, the
 subdirectory will be highlighted, indicating the file is going to go in that directory.  When clicking
 on a container with many files, be patient: it may take a while, and there is currently no "please wait"
-feedback to let you know anything is happening.
+feedback to let you know anything is happening.  To view an Azure file in the browser, simply click on it.
 
 Some Technical Mumbo Jumbo
 --------------------------

@@ -239,9 +239,11 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
       subdirsProcessed[subdir] = true;
     } else {
       // file
+      var path = '/' + azureParts.container + '/' + dir + remainder;
       entries.push({
         name: remainder,
-        path: '/' + azureParts.container + '/' + dir + remainder,
+        path: path,
+        url: 'http://' + account.name + '.blob.core.windows.net' + path,
         isDirectory: false,
         isHidden: false,
         size: null,   // TODO
