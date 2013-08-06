@@ -8,13 +8,14 @@
     "licenses"      : [
         { "type": "GPL", "url": "http://www.gnu.org/licenses/gpl.html" }
     ],
-    "version"       : "0.0.3beta",
+    "version"       : "0.0.4beta",
     "keywords"      : [
         "azure",
         "cloud",
         "file"
     ],
     "repository"    : "https://github.com/popart-dev/cx.git",
+    "poreferGlobal" : "true",
     "bin"           : {
         "cxs" : "./app/cxs.js"
     },
