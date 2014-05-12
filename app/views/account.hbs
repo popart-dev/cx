@@ -5,7 +5,7 @@
 
 	<div class="span6 dirContainer">
 		<h3>Local Files</h3>
-		<button class="hiddenFiles btn btn-success">Show Hidden</button>
+		<button class="hiddenFiles btn btn-success">Show Hidden Files</button>
 		<div id="localFiles" class="dirContent">
 		</div>
 	</div>
@@ -131,7 +131,7 @@
 
 		$('.hiddenFiles').click(function(){
 			$(this).text(function(i, text){
-			  return text === "Show Hidden Files" ? "Hide Hidden Files" : "Show Hidden Files";
+			  return text === "Hide Hidden Files" ? "Show Hidden Files" : "Hide Hidden Files";
 			})
 
 	  	$('[data-hidden="true"]').toggle(
