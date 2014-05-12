@@ -2,14 +2,16 @@
 	<div class="dir-header">{{path}}</div>
 	<div class="dir-entries">
 		{{#each entries}}
-			{{#if isDirectory}}
-				<div class="dir-entry dir" data-path="{{path}}"><a href="#" data-path="{{path}}">{{name}}</a></div>
-			{{else}}
-				<div class="dir-entry file" data-path="{{path}}">
-					<a href="{{url}}">{{name}}</a>
-					<a href="#" data-path="{{path}}" data-action="delete"><i class="icon-remove"></i></a>
-				</div>
-			{{/if}}
+		  {{#unless isHidden}}
+				{{#if isDirectory}}
+					<div class="dir-entry dir" data-path="{{path}}"><a href="#" data-path="{{path}}">{{name}}</a></div>
+				{{else}}
+					<div class="dir-entry file" data-path="{{path}}">
+						<a href="{{url}}">{{name}}</a>
+						<a href="#" data-path="{{path}}" data-action="delete"><i class="icon-remove"></i></a>
+					</div>
+				{{/if}}
+			{{/unless}}
 		{{/each}}
 	</div>
 </div>
