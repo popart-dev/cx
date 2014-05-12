@@ -1,17 +1,21 @@
 <div class="fileDropRoot" data-path="{{path}}">
 	<div class="dir-header">{{path}}</div>
 	<div class="dir-entries">
-		{{#each entries}}
-		  {{#unless isHidden}}
-				{{#if isDirectory}}
-					<div class="dir-entry dir" data-path="{{path}}"><a href="#" data-path="{{path}}">{{name}}</a></div>
-				{{else}}
-					<div class="dir-entry file" data-path="{{path}}">
-						<a href="{{url}}">{{name}}</a>
-						<a href="#" data-path="{{path}}" data-action="delete"><i class="icon-remove"></i></a>
-					</div>
-				{{/if}}
-			{{/unless}}
+		{{#each entries}}		 
+			{{#if isDirectory}}
+				<div class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}">{{name}}</a></div>
+			{{else}}
+				<div class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}">
+					<a href="{{url}}">{{name}}</a>
+					<a href="#" data-path="{{path}}"><i class="icon-remove"></i></a>
+				</div>
+			{{/if}}
 		{{/each}}
 	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		$('[data-hidden="true"]').hide();
+	});
+</script>

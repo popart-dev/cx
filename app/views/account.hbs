@@ -1,8 +1,11 @@
 
+
+
 <div class="row">
 
 	<div class="span6 dirContainer">
 		<h3>Local Files</h3>
+		<button class="hiddenFiles btn btn-success">Show Hidden</button>
 		<div id="localFiles" class="dirContent">
 		</div>
 	</div>
@@ -14,6 +17,7 @@
 	</div>
 
 </div>
+
 
 <script>
 
@@ -103,7 +107,7 @@
 
 		refreshLocal();
 		refreshAzure();
-
+      
 		$('#localFiles').on('click','a',function(){
 			var path = $(this).data('path');
 			if( path ) refreshLocal(path);
@@ -125,5 +129,18 @@
 			}
 		});
 
+		$('.hiddenFiles').click(function(){
+	  	$('[data-hidden="true"]').toggle(
+        function(){
+          $('[data-hidden="true"]').show();
+          $('a').data('hidden', "false");
+        },
+        function(){
+          $('[data-hidden="false"]').hide();
+          $('a').data('hidden', "true");
+        }
+	  	);	
+	
+		});
 	});
 </script>
