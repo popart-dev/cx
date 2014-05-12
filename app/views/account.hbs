@@ -130,6 +130,10 @@
 		});
 
 		$('.hiddenFiles').click(function(){
+			$(this).text(function(i, text){
+			  return text === "Show Hidden Files" ? "Hide Hidden Files" : "Show Hidden Files";
+			})
+
 	  	$('[data-hidden="true"]').toggle(
         function(){
           $('[data-hidden="true"]').show();
