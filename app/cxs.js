@@ -85,7 +85,8 @@ function getLocalDir( path ) {
         path: entryPath + (stats.isDirectory() ? '/' : ''),
         isDirectory: stats.isDirectory(),
         isHidden: process.platform!=='win32' && fname[0]==='.',   // currently do not support Windows hidden files
-        size: ((stats.size)/1048576).toFixed(2) > 0 ? (((stats.size)/1048576).toFixed(2) + " MB") : (((stats.size)/1024).toFixed(2) + " KB") ,
+        bigsize: ((stats.size)/1048576).toFixed(2) > 0 ? (((stats.size)/1048576).toFixed(2) + " MB") : (((stats.size)/1024).toFixed(2) + " KB") ,
+        size: stats.size + " B",
         mtime: moment(stats.mtime).format('L')
       } );
   });
