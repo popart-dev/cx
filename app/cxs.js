@@ -248,7 +248,8 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         url: 'http://' + account.name + '.blob.core.windows.net' + path,
         isDirectory: false,
         isHidden: false,
-        size: null,   // TODO
+        size: "123",
+        bigsize: "1234",   // TODO
         mtime: null,  // TODO
       });
     }
