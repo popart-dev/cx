@@ -3,11 +3,13 @@
 	<div class="dir-entries">
 		{{#each entries}}
 			{{#if isDirectory}}
-				<div class="dir-entry dir" data-path="{{path}}"><a href="#" data-path="{{path}}">{{name}}</a></div>
+				<div class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}">
+					<a href="#" data-path="{{path}}">{{name}}</a>
+				</div>
 			{{else}}
-				<div class="dir-entry file" data-path="{{path}}">
-					<a href="{{url}}">{{name}}</a>
-					<a href="#" data-path="{{path}}" data-action="delete"><i class="icon-remove"></i></a>
+				<div class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}">
+					<a href="{{url}}">{{name}}</a><span class="size"> {{size}} MB</span><span class="modified">{{mtime}} • </span>
+					<a href="#" data-path="{{path}}"><i class="icon-remove"></i></a>
 				</div>
 			{{/if}}
 		{{/each}}

@@ -7,6 +7,7 @@ var fs = require('fs'),
   exphbs  = require(__dirname + '/../'), // "express3-handlebars"
   hbsHelpers = require(__dirname + '/hbs_helpers'),
   azure = require('azure'),
+  moment = require('moment'),
   app = express(),
   hbs;
 
@@ -84,8 +85,8 @@ function getLocalDir( path ) {
         path: entryPath + (stats.isDirectory() ? '/' : ''),
         isDirectory: stats.isDirectory(),
         isHidden: process.platform!=='win32' && fname[0]==='.',   // currently do not support Windows hidden files
-        size: stats.size,
-        mtime: stats.mtime
+        size: ((stats.size)/1048576).toFixed(2),
+        mtime: moment(stats.mtime).format('L')
       } );
   });
   return dir;
