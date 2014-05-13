@@ -7,6 +7,7 @@ var fs = require('fs'),
   exphbs  = require(__dirname + '/../'), // "express3-handlebars"
   hbsHelpers = require(__dirname + '/hbs_helpers'),
   azure = require('azure'),
+  moment = require('moment'),
   app = express(),
   hbs;
 
@@ -84,8 +85,9 @@ function getLocalDir( path ) {
         path: entryPath + (stats.isDirectory() ? '/' : ''),
         isDirectory: stats.isDirectory(),
         isHidden: process.platform!=='win32' && fname[0]==='.',   // currently do not support Windows hidden files
-        size: stats.size,
-        mtime: stats.mtime
+        bigsize: ((stats.size)/1048576).toFixed(2) > 0 ? (((stats.size)/1048576).toFixed(2) + " MB") : (((stats.size)/1024).toFixed(2) + " KB") ,
+        size: stats.size + " B",
+        mtime: moment(stats.mtime).format('L')
       } );
   });
   return dir;
@@ -246,7 +248,8 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         url: 'http://' + account.name + '.blob.core.windows.net' + path,
         isDirectory: false,
         isHidden: false,
-        size: null,   // TODO
+        size: "123",
+        bigsize: "1234",   // TODO
         mtime: null,  // TODO
       });
     }
