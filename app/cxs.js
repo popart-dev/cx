@@ -35,10 +35,6 @@ app.get('/',function(req,res) {
   res.render('landingpage');
 });
 
-app.get('/home',function(req,res) {
-  res.render('home');
-});
-
 app.post('/login', function (req, res) {
   req.session.azureAccount = { name: req.body.accountName, key: req.body.accountKey };
   res.redirect('/account/' + req.session.azureAccount.name);
