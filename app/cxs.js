@@ -32,6 +32,10 @@ app.use(express.bodyParser());
 app.use(express.static(__dirname + '/public'));
 
 app.get('/',function(req,res) {
+  res.render('landingpage');
+});
+
+app.get('/home',function(req,res) {
   res.render('home');
 });
 
