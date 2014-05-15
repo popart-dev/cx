@@ -233,6 +233,7 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         path: '/' + azureParts.container + '/' + dir + subdir + '/',
         isDirectory: true,
         isHidden: false,
+        show: true,
         size: 0,
         mtime: null,  // TODO
       });
@@ -371,3 +372,5 @@ var opts = require('nomnom')
 
 app.listen( opts.port );
 console.log( 'Listening on port ' + opts.port + '....');
+
+
