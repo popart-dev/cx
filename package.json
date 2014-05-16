@@ -4,8 +4,8 @@
     "author"        : "Pop Art (http://popart.com)",
     "contributors"  : [
         "Ethan Brown <ethan.brown@popart.com>",
-		"Andrew Hallberg <allbergandrew@gmail.com>",
-		"Liz Tom <liz.tom@gmail.com">"
+		"Andrew Hallberg <hallbergandrew@gmail.com>",
+		"Liz Tom <liz.tom@gmail.com>"
     ],
     "licenses"      : [
         { "type": "GPL", "url": "http://www.gnu.org/licenses/gpl.html" }
