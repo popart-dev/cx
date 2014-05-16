@@ -1,0 +1,54 @@
+<div class="cloud-image col-md-4">
+  <img src="/img/cloud.png" alt="Cloud">
+</div>
+
+<div class="landing-title">
+  <h1>CX File Transfer</h1>
+</div>
+
+
+
+  <h2 class="sub-header"> Please choose a cloud storage service</h2>
+
+
+<br>
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-4">
+  <button class="login-btn btn btn-info" data-toggle="modal" data-target="#myModal">Azure Login</button>
+  </div>
+  <div class="col-md-4">
+  <button action="/amazon"class="login-btn btn btn-info">Amazon Login(Soon to come!)</button>
+  </div>
+
+<!-- Modal Azure-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Azure Login</h4>
+      </div>
+      <div class="modal-body">
+        <h1>Microsoft Azure Storage Explorer</h1>
+
+<form role="form" action="/login" method="post">
+  <div class="form-group">
+    <label for="accountName">Account:</label>
+    <input class="form-control" type="text" name="accountName" id="accountName" />
+  </div>
+  <div class="form-group">
+    <label for="accountKey">Key:</label>
+    <input class="form-control" type="password" name="accountKey" id="accountKey" />
+  </div>
+  <div>
+    <input class="btn btn-success" type="submit" value="Connect" />
+  </div>
+</form>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</div>

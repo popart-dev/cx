@@ -46,7 +46,7 @@
 		var src = $(ui.draggable).data('path');
 		var dstDir = pathStack.pop();
 		if( dstDir === '/' ) {
-			alert( 'You must transfer files into a container.' );	
+			alert( 'You must transfer files into a container.' );
 			return;
 		}
 		var dst = dstDir + src.match(/\/([^/]+)$/)[1];
@@ -146,5 +146,6 @@
 	  	);	
 	
 		});
+
 	});
 </script>
