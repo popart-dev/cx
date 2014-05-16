@@ -3,7 +3,9 @@
     "description"   : "Cloud transfer utility: for transfering files/blobs to and from the cloud.",
     "author"        : "Pop Art (http://popart.com)",
     "contributors"  : [
-        "Ethan Brown <ethan.brown@popart.com>"
+        "Ethan Brown <ethan.brown@popart.com>",
+		"Andrew Hallberg <allbergandrew@gmail.com>",
+		"Liz Tom <liz.tom@gmail.com">"
     ],
     "licenses"      : [
         { "type": "GPL", "url": "http://www.gnu.org/licenses/gpl.html" }
