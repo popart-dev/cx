@@ -310,7 +310,7 @@ app.get('/api/azure/upload', function(req,res){
         _azureCache[account.name][azureParts.container].files.indexOf( blob.blob ) < 0 ) {
           blobService.listBlobs(azureParts.container, function(err,blobs){
             blobs.forEach(function(blobby){
-              container.files.push( blobby );
+              azureParts.container.files.push( blobby );
             });
           });
         res.json( { message: 'File uploaded successfully.' } );
