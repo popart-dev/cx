@@ -7,6 +7,7 @@ var fs = require('fs'),
   exphbs  = require(__dirname + '/../'), // "express3-handlebars"
   hbsHelpers = require(__dirname + '/hbs_helpers'),
   azure = require('azure'),
+  moment = require('moment'),
   app = express(),
   hbs;
 
