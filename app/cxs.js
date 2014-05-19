@@ -174,7 +174,7 @@ function refreshAzureCache( account, containerName, done ) {
   blobService.listBlobs(containerName,function(err,blobs){
     // TODO: error handling
     blobs.forEach(function(blob){
-      container.files.push( blob.name );
+      container.files.push( blob );
     });
     // note that we don't construct the dir; that's done on a JIT basis in getAzureVirtualDirectoryEntries
     _azureCache[account.name] = _azureCache[account.name] || {};
@@ -220,9 +220,9 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
   }];
   dir = azureParts.dir;
   if( dir !== '' ) dir = dir + '/';
-  files.forEach(function(azureName){
-    if( azureName.indexOf( dir )!==0 ) return;
-    var remainder = azureName.substr( dir.length );
+  files.forEach(function(azureBlob){
+    if( azureBlob['name'].indexOf( dir )!==0 ) return;
+    var remainder = azureBlob.name.substr( dir.length );
     var slashIdx = remainder.indexOf('/');
     if( slashIdx>=0 ) {
       // subdirectory
@@ -235,7 +235,7 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         isHidden: false,
         show: true,
         size: 0,
-        mtime: null,  // TODO
+        mtime: azureBlob['properties']['last-modified'],  // TODO
       });
       subdirsProcessed[subdir] = true;
     } else {
@@ -247,8 +247,8 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         url: 'http://' + account.name + '.blob.core.windows.net' + path,
         isDirectory: false,
         isHidden: false,
-        size: null,   // TODO
-        mtime: null,  // TODO
+        size: azureBlob['properties']['content-length'],   // TODO
+        mtime: azureBlob['properties']['last-modified'],  // TODO
       });
     }
   });
