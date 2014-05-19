@@ -4,14 +4,15 @@
 <div class="row">
 
 	<div class="col-md-6 dirContainer">
-		<h3>Local Files</h3>
-		<button class="hiddenFiles btn btn-success">Show Hidden Files</button>
+		<h2>Local Files</h2>
+		<button class="hiddenFiles btn btn-default">Show Hidden Files</button>
+		<button id="alphabetize" class="alpha btn btn-default">Alphabetize</button>
 		<div id="localFiles" class="dirContent">
 		</div>
 	</div>
 
 	<div class="col-md-6 dirContainer">
-		<h3>Azure Storage</h3>
+		<h2>Azure Storage</h2>
 		<div id="azureStorage" class="dirContent">
 		</div>
 	</div>
@@ -95,6 +96,13 @@
 		} );
 	}
 
+	function sortLocal(path) {
+		if( !path ) path = '/';
+		$('#localFiles').load( '/partials/local/dir?path=' + encodeURIComponent(path), null, function() {
+			refreshDragDrop();
+		} ).sort();
+	}
+
 	function refreshAzure(path) {
 		if( !path ) path = '/';
 		$('#azureStorage').load( '/partials/azure/dir?path=' + encodeURIComponent(path), null, function() {
@@ -112,6 +120,24 @@
 			var path = $(this).data('path');
 			if( path ) refreshLocal(path);
 		});
+
+		$('#alphabetize').on('click', function(){
+
+			if ($(this).hasClass("#alphabetized")) {
+				$(this).text("Alphabetize");
+				refreshLocal(path);
+				$(this).removeClass("#alphabetized");
+				}
+			else {
+			 var path = $(this).data('path');
+					if( !path ) path = '/';
+					console.log(path);
+					$(this).addClass("#alphabetized");
+					$(this).text("Un-Alphabetize");
+
+					sortLocal(path)
+					}
+				});
 
 		$('#azureStorage').on('click','a',function(){
 			var action = $(this).data('action');
