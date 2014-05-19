@@ -5,13 +5,16 @@
 
 	<div class="col-md-6 dirContainer">
 		<h3>Local Files</h3>
-		<button class="hiddenFiles btn btn-success">Show Hidden Files</button>
+		<button class="hiddenFiles btn btn-default">Show Hidden Files</button>
+		<button class="bytes btn btn-default">Display Bytes or KB/MB</button>
 		<div id="localFiles" class="dirContent">
 		</div>
 	</div>
 
 	<div class="col-md-6 dirContainer">
 		<h3>Azure Storage</h3>
+		<button class="hiddenFiles btn btn-default">Show Hidden Files</button>
+		<button class="bytes btn btn-default">Display Bytes or KB/MB</button>
 		<div id="azureStorage" class="dirContent">
 		</div>
 	</div>
@@ -130,21 +133,16 @@
 		});
 
 		$('.hiddenFiles').click(function(){
-			$(this).text(function(i, text){
-			  return text === "Hide Hidden Files" ? "Show Hidden Files" : "Hide Hidden Files";
-			})
+			if($('[data-hidden="true"]').is(":hidden")){
+		  	$(".hiddenFiles").text("Hide Hidden Files")
+			} else {
+			  $(".hiddenFiles").text("Show Hidden Files")
+			}
+	  	$('[data-hidden="true"]').slideToggle();
+		});
 
-	  	$('[data-hidden="true"]').toggle(
-        function(){
-          $('[data-hidden="true"]').show();
-          $('a').data('hidden', "false");
-        },
-        function(){
-          $('[data-hidden="false"]').hide();
-          $('a').data('hidden', "true");
-        }
-	  	);	
-	
+		$('.bytes').click(function() {
+		  alert($('.file').data('size'));
 		});
 
 	});
