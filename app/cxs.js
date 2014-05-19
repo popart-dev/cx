@@ -221,7 +221,7 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
   dir = azureParts.dir;
   if( dir !== '' ) dir = dir + '/';
   files.forEach(function(azureBlob){
-    if( azureBlob['name'].indexOf( dir )!==0 ) return;
+    if( azureBlob.name.indexOf( dir )!==0 ) return;
     var remainder = azureBlob.name.substr( dir.length );
     var slashIdx = remainder.indexOf('/');
     if( slashIdx>=0 ) {
@@ -235,7 +235,7 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         isHidden: false,
         show: true,
         size: 0,
-        mtime: azureBlob['properties']['last-modified'],  // TODO
+        mtime: azureBlob.properties['last-modified'],  // TODO
       });
       subdirsProcessed[subdir] = true;
     } else {
@@ -247,8 +247,8 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         url: 'http://' + account.name + '.blob.core.windows.net' + path,
         isDirectory: false,
         isHidden: false,
-        size: azureBlob['properties']['content-length'],   // TODO
-        mtime: azureBlob['properties']['last-modified'],  // TODO
+        size: azureBlob.properties['content-length'],   // TODO
+        mtime: azureBlob.properties['last-modified'],  // TODO
       });
     }
   });
@@ -308,7 +308,11 @@ app.get('/api/azure/upload', function(req,res){
         _azureCache[account.name][azureParts.container] &&
         _azureCache[account.name][azureParts.container].files &&
         _azureCache[account.name][azureParts.container].files.indexOf( blob.blob ) < 0 ) {
-        _azureCache[account.name][azureParts.container].files.push( blob.blob );
+          blobService.listBlobs(azureParts.container, function(err,blobs){
+            blobs.forEach(function(blobby){
+              container.files.push( blobby );
+            });
+          });
         res.json( { message: 'File uploaded successfully.' } );
       }
     }
@@ -334,7 +338,13 @@ app.get('/api/azure/delete', function(req,res) {
         res.json( { error: error } );
       } else {
         if( _azureCache[account.name] && _azureCache[account.name][azureParts.container] && _azureCache[account.name][azureParts.container].files ) {
-          var idx = _azureCache[account.name][azureParts.container].files.indexOf( azureParts.azureName );
+          var idx;
+          for(var i = 0; i < _azureCache[account.name][azureParts.container].files.length; i++) {
+            if (_azureCache[account.name][azureParts.container].files[i].name === azureParts.azureName) {
+              idx = i;
+              break;
+            }
+          }
           idx>=0 && _azureCache[account.name][azureParts.container].files.remove( idx );
         }
         res.json( { message: 'File deleted successfully.' } );
