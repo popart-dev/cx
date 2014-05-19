@@ -5,7 +5,7 @@
 			{{#if isDirectory}}
 				<div class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}">{{name}}</a></div>
 			{{else}}
-				<div class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}">
+				<div class="dir-entry file" data-path="{{path}}" data-action="delete" data-hidden="{{isHidden}}">
 					<a href="{{url}}">{{name}}</a>
 					<a href="#" data-path="{{path}}"><i class="icon-remove"></i></a>
 				</div>
