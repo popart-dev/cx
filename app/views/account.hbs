@@ -3,14 +3,14 @@
 
 <div class="row">
 
-	<div class="span6 dirContainer">
+	<div class="col-md-6 dirContainer">
 		<h3>Local Files</h3>
 		<button class="hiddenFiles btn btn-success">Show Hidden Files</button>
 		<div id="localFiles" class="dirContent">
 		</div>
 	</div>
 
-	<div class="span6 dirContainer">
+	<div class="col-md-6 dirContainer">
 		<h3>Azure Storage</h3>
 		<div id="azureStorage" class="dirContent">
 		</div>
@@ -107,7 +107,7 @@
 
 		refreshLocal();
 		refreshAzure();
-      
+
 		$('#localFiles').on('click','a',function(){
 			var path = $(this).data('path');
 			if( path ) refreshLocal(path);
@@ -143,8 +143,8 @@
           $('[data-hidden="false"]').hide();
           $('a').data('hidden', "true");
         }
-	  	);	
-	
+	  	);
+
 		});
 
 	});
