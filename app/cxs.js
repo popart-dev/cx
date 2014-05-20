@@ -369,7 +369,7 @@ app.get('/partials/local/dir', function(req,res){
   dir.layout = false;
   dir.entries.forEach(function(f){
     f.prettySize = prettySize(f.size);
-    f.prettyDate = moment(f.mtime).format('L');
+    f.prettyDate = moment(new Date(f.mtime)).format('L');
   });
   res.render('_partials/dir_listing', dir);
 });
@@ -380,7 +380,7 @@ app.get('/partials/azure/dir', function(req,res){
     dir.layout = false;
     dir.entries.forEach(function(f){
       f.prettySize = prettySize(parseInt(f.size));
-      f.prettyDate = moment(f.mtime).format('L');
+      f.prettyDate = moment(new Date(f.mtime)).format('L');
     });
     res.render('_partials/dir_listing', dir);
   });
