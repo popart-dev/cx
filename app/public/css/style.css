@@ -1,0 +1,102 @@
+.dirContainer {
+    }
+
+    .dirContainer .row {
+    }
+
+    .dirContent {
+    }
+
+    .fileDropRoot {
+      height: 100%;
+      min-height: 100%;
+      border: solid 2px blue;
+    }
+
+    .dir-entries {
+      height: 100%;
+      overflow-y: scroll;
+    }
+
+    .dir-entry {
+      margin: 6px;
+      background-color: white;
+    }
+
+
+    #localFiles .dir-entry i.icon-remove {
+      /* for now, we do not support local removal */
+      display: none;
+    }
+
+    .dir-entry {
+    }
+
+    .dir-entry.dir {
+      /*background: #64a8d1;*/
+      border: solid 1px #64a8d1;
+      border-radius: 4px;
+    }
+
+    .fileDropRoot {
+      border: solid 3px transparent;
+      padding: 12px;
+      font-family: 'Andale Mono', monospace;
+    }
+
+    .fileDropRoot.dropHint {
+      border: solid 3px #ff8c00;
+    }
+
+    .dir-entry.dropHint {
+      background-color: #ddd;
+    }
+
+    .dir-header {
+      padding: 8px;
+      background-color: #64a8d1;
+      color: white;
+    }
+
+    .dir-entries {
+      border: solid 1px #65a8d1;
+      padding: 8px;
+      overflow: auto;
+    }
+
+  .login-btn {
+    height: 22em;
+    width: 20em;
+    margin: 6px;
+    display: block;
+    position: relative;
+
+
+  }
+
+  .landing-title{
+    text-align: right;
+    font-size: 2em;
+    padding-right: 12em;
+  }
+
+  .cloud-image{
+    z-index: -1;
+    position: absolute;
+    padding-left: 10em;
+  }
+  .sub-header{
+    text-align: center;
+    position: relative;
+    padding-top: 2em;
+    padding-bottom: 2em;
+  }
+body {
+      background: #00aa77;
+      background-image: url("/img/ZenBG-1.png"), url("/img/ZenBG-2.png");
+      background-repeat: repeat-x, repeat;
+    }
+div .white {
+  background-color: white;
+}
+
