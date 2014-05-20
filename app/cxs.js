@@ -86,7 +86,7 @@ function getLocalDir( path ) {
         isDirectory: stats.isDirectory(),
         isHidden: process.platform!=='win32' && fname[0]==='.',   // currently do not support Windows hidden files
         size: stats.size,
-        mtime: stats.mtime
+        mtime: moment(stats.mtime).format('L')
       } );
   });
   return dir;
@@ -286,12 +286,13 @@ function getAzureDir( account, path, fn, forceRefresh ) {
     getAzureDirFromCache( account, path, fn );
 }
 
-app.get('/api/azure/ls', function(req,res){
-    var forceRefresh = req.query.refresh && !req.query.refresh.trim().match(/0|false|no/i);
-    getAzureDir( getCurrentAzureAccount(req), req.query.path, function(dir) {
-      res.json( dir );
-    },forceRefresh);
-});
+function prettySize(size){
+  if(size < 1000) return size.toFixed(0) + ' B';
+  if(size < 1000000) return (size/1024).toFixed(2) + ' kB';
+  if(size < 1000000000) return (size/1048576).toFixed(2) + ' MB';
+  if(size < 1000000000000) return (size/1073741824).toFixed(2) + ' GB';
+  return (size/1000000000000).toFixed(2) + ' TB';
+}
 
 app.get('/api/azure/upload', function(req,res){
   var account = getCurrentAzureAccount(req);
@@ -366,6 +367,10 @@ app.get('/partials/local/dir', function(req,res){
   var path = req.query.path;
   var dir = getLocalDir(path);
   dir.layout = false;
+  dir.entries.forEach(function(f){
+    f.prettySize = prettySize(f.size);
+    f.prettyDate = moment(f.mtime).format('L');
+  });
   res.render('_partials/dir_listing', dir);
 });
 
@@ -373,6 +378,10 @@ app.get('/partials/azure/dir', function(req,res){
   var path = req.query.path;
   getAzureDir( getCurrentAzureAccount(req), path, function(dir) {
     dir.layout = false;
+    dir.entries.forEach(function(f){
+      f.prettySize = prettySize(parseInt(f.size));
+      f.prettyDate = moment(f.mtime).format('L');
+    });
     res.render('_partials/dir_listing', dir);
   });
 });

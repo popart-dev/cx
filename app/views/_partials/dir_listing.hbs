@@ -6,7 +6,7 @@
 				<div class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}">{{name}}</a></div>
 			{{else}}
 				<div class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}" data-blobsize="{{size}}">
-					<a href="{{url}}">{{name}}</a><span class="size"></span><span class="big-size"></span><span class="modified">{{mtime}} • </span>
+					<a href="{{url}}">{{name}}</a> {{prettySize}} <span class="big-size"></span><span class="modified"> • {{prettyDate}}</span>
 					
 					<a href="#" data-path="{{path}}" data-action="delete"><span class="glyphicon glyphicon-remove"></span></a>
 					
