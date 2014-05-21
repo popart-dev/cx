@@ -1,8 +1,9 @@
 <div class="fileDropRoot" data-path="{{path}}">
 	<div class="dir-header">{{path}}</div>
 	<div class="dir-entries white">
-		<table class="table table-striped">
-
+		<table cellspacing="1" id="sortme" class="tablesorter table table-striped">
+			<thead><tr><th>File Name</th><th>Size</th></tr></thead>
+			<tbody>
 		{{#each entries}}
 		<tr>
 			{{#if isDirectory}}
@@ -15,13 +16,16 @@
 			{{/if}}
 			</tr>
 		{{/each}}
-
+	</tbody>
 	</table>
 	</div>
 </div>
 
 <script>
 	$(document).ready(function() {
+
+    // call the tablesorter plugin
+    $("table").tablesorter();
 		$('[data-hidden="true"]').hide();
 	});
 </script>
