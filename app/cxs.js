@@ -311,9 +311,12 @@ app.get('/api/azure/upload', function(req,res){
         _azureCache[account.name][azureParts.container].files &&
         _azureCache[account.name][azureParts.container].files.indexOf( blob.blob ) < 0 ) {
           blobService.listBlobs(azureParts.container, function(err,blobs){
-            blobs.forEach(function(blobby){
-              azureParts.container.files.push( blobby );
-            });
+          blobs.sort(function(b, a) {
+              a = new Date(a.properties['last-modified']);
+              b = new Date(b.properties['last-modified']);
+              return a>b ? -1 : a<b ? 1 : 0;
+            });  
+            _azureCache[account.name][azureParts.container].files.push( blobs[blobs.length-1] );
           });
         res.json( { message: 'File uploaded successfully.' } );
       }
