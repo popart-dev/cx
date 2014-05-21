@@ -1,15 +1,8 @@
-<div class="alert alert-warning alert-dismissable">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  <strong>Success!</strong> Welcome to the Azure file share system!
-</div>
-
-
 <div class="row">
 
 	<div class="col-md-6 col-sm-6 dirContainer">
 		<h2 class="full-dir">Local Files</h2>
 		<button class="hiddenFiles btn btn-default">Show Hidden Files</button>
-		<button id="alphabetize" class="alpha btn btn-default">Alphabetize</button>
 		<div id="localFiles" class="dirContent">
 		</div>
 	</div>
@@ -100,17 +93,6 @@
 		} );
 	}
 
-	function sortLocal(path) {
-		$('#localFiles').load( '/partials/local/dir?path=' + encodeURIComponent(path), function() {
-			refreshDragDrop();
-		} ).sort(
-  function(a, b) {
-    if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-    if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-    return 0;
-  	});
-	}
-
 	function refreshAzure(path) {
 		if( !path ) path = '/';
 		$('#azureStorage').load( '/partials/azure/dir?path=' + encodeURIComponent(path), null, function() {
@@ -130,27 +112,6 @@
 			if( path ) refreshLocal(path);
 		});
 
-		$('#alphabetize').on('click', function(){
-			var path = $("div").find(".fileDropRoot").data('path');
-
-			if ($(this).hasClass("#alphabetized")) {
-				$(this).text("Alphabetize");
-				refreshLocal(path);
-				$(this).removeClass("#alphabetized");
-				}
-			else {
-					console.log(path);
-					$(this).addClass("#alphabetized");
-					$(this).text("Un-Alphabetize");
-
-				$.ajax('/partials/local/dir?path=' + encodeURIComponent(path), function(data){
-        var $html = $(data);
-        $html.find('tr').sort();
-        $('#localFiles').html($html);
-    });
-
-					}
-				});
 
 		$('#azureStorage').on('click','a',function(){
 			var action = $(this).data('action');
