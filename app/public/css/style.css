@@ -65,20 +65,22 @@
     }
 
   .login-btn {
-    height: 22em;
-    width: 20em;
+    height: 11em;
+    width: 10em;
     margin: 6px;
     display: block;
     position: relative;
+    white-space: normal;
 
-
+/* color scheme: http://colorschemedesigner.com/#3u21Tw0w0w0w0 */
   }
 
-  .landing-title{
-    text-align: right;
-    font-size: 2em;
-    padding-right: 12em;
-  }
+  h1.landing {
+    text-align: center;
+    font-size: 4em;
+    padding-top: .25em;
+     color: black;
+   }
 
   .cloud-image{
     z-index: -1;
@@ -86,17 +88,27 @@
     padding-left: 10em;
   }
   .sub-header{
+    color: black;
     text-align: center;
     position: relative;
-    padding-top: 2em;
-    padding-bottom: 2em;
+    padding-top: 1em;
+    padding-bottom: .25em;
   }
 body {
       background: #00aa77;
       background-image: url("/img/ZenBG-1.png"), url("/img/ZenBG-2.png");
       background-repeat: repeat-x, repeat;
     }
-div .white {
+.white {
   background-color: white;
+}
+
+.login {
+  font-size: 2em;
+}
+h2.full-dir {
+  font-size: 2em;
+  color: black;
+
 }
 

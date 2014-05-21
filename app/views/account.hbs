@@ -6,16 +6,16 @@
 
 <div class="row">
 
-	<div class="col-md-6 dirContainer">
-		<h2>Local Files</h2>
+	<div class="col-md-6 col-sm-6 dirContainer">
+		<h2 class="full-dir">Local Files</h2>
 		<button class="hiddenFiles btn btn-default">Show Hidden Files</button>
 		<button id="alphabetize" class="alpha btn btn-default">Alphabetize</button>
 		<div id="localFiles" class="dirContent">
 		</div>
 	</div>
 
-	<div class="col-md-6 dirContainer">
-		<h2>Azure Storage</h2>
+	<div class="col-md-6 col-sm-6 dirContainer">
+		<h2 class="full-dir">Azure Storage</h2>
 		<div id="azureStorage" class="dirContent">
 		</div>
 	</div>
@@ -93,17 +93,22 @@
 	}
 
 	function refreshLocal(path) {
-		if( !path ) path = '~';
+				if( !path ) path = '~';
+
 		$('#localFiles').load( '/partials/local/dir?path=' + encodeURIComponent(path), null, function() {
 			refreshDragDrop();
 		} );
 	}
 
 	function sortLocal(path) {
-		if( !path ) path = '/';
-		$('#localFiles').load( '/partials/local/dir?path=' + encodeURIComponent(path), null, function() {
+		$('#localFiles').load( '/partials/local/dir?path=' + encodeURIComponent(path), function() {
 			refreshDragDrop();
-		} ).sort();
+		} ).sort(
+  function(a, b) {
+    if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+    if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+    return 0;
+  	});
 	}
 
 	function refreshAzure(path) {
@@ -119,12 +124,14 @@
 		refreshLocal();
 		refreshAzure();
 
+
 		$('#localFiles').on('click','a',function(){
 			var path = $(this).data('path');
 			if( path ) refreshLocal(path);
 		});
 
 		$('#alphabetize').on('click', function(){
+			var path = $("div").find(".fileDropRoot").data('path');
 
 			if ($(this).hasClass("#alphabetized")) {
 				$(this).text("Alphabetize");
@@ -132,13 +139,16 @@
 				$(this).removeClass("#alphabetized");
 				}
 			else {
-			 var path = $(this).data('path');
-					if( !path ) path = '/';
 					console.log(path);
 					$(this).addClass("#alphabetized");
 					$(this).text("Un-Alphabetize");
 
-					sortLocal(path)
+				$.ajax('/partials/local/dir?path=' + encodeURIComponent(path), function(data){
+        var $html = $(data);
+        $html.find('tr').sort();
+        $('#localFiles').html($html);
+    });
+
 					}
 				});
 
@@ -175,6 +185,6 @@
 	  	);
 
 		});
-
 	});
+
 </script>
