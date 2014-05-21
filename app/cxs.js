@@ -301,24 +301,32 @@ app.get('/api/azure/upload', function(req,res){
   var blobService = azure.createBlobService( account.name, account.key );
   var azureParts = getAzureParts( dst );
   blobService.createBlockBlobFromFile( azureParts.container, azureParts.azureName, src, function(err,blob) {
+    var cache = _azureCache[account.name][azureParts.container].files;
     if( err ) {
       console.error( "Unable to upload %s to %s.", src, dst );
       res.json( { error: 'Server error uploading file.' } );
     } else {
       // TODO: uuuuuugly
       if( _azureCache[account.name] &&
-        _azureCache[account.name][azureParts.container] &&
-        _azureCache[account.name][azureParts.container].files &&
-        _azureCache[account.name][azureParts.container].files.indexOf( blob.blob ) < 0 ) {
+        _azureCache[account.name][azureParts.container] && cache && cache.indexOf( blob.blob ) < 0 ) {
           blobService.listBlobs(azureParts.container, function(err,blobs){
-          blobs.sort(function(b, a) {
-              a = new Date(a.properties['last-modified']);
-              b = new Date(b.properties['last-modified']);
-              return a>b ? -1 : a<b ? 1 : 0;
-            });  
-            _azureCache[account.name][azureParts.container].files.push( blobs[blobs.length-1] );
+          var fileName = dst.replace("/" + azureParts.container + "/", "");
+          var newblob = blobs.filter(function(blob){ return blob.name == fileName; })[0];
+            if(newblob === undefined) {
+              res.json( {error: "Something went wrong."})
+            }
+            for(var i = 0; i < cache.length; i++) {
+              if(cache[i].name == fileName) {
+                cache[i] = newblob
+                return;
+              }
+            }
+            cache.push(newblob);
           });
+          
         res.json( { message: 'File uploaded successfully.' } );
+      } else {
+        res.json( { error: 'Unable to upload file.' }) ;
       }
     }
   });
