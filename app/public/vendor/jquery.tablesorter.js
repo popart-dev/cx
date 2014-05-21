@@ -57,7 +57,7 @@
 				sortAppend       : null,       // column(s) sorted last; always applied
 				sortStable       : false,      // when sorting two rows with exactly the same content, the original sort order is maintained
 
-				sortInitialOrder : 'asc',      // sort direction on first click
+				sortInitialOrder : 'desc',      // sort direction on first click
 				sortLocaleCompare: false,      // replace equivalent character (accented characters)
 				sortReset        : false,      // third click on the header will reset column to default - unsorted
 				sortRestart      : false,      // restart sort to "sortInitialOrder" when clicking on previously unsorted columns
@@ -88,7 +88,7 @@
 				cssHeaderRow     : '',
 				cssProcessing    : '', // processing icon applied to header during sort/filter
 
-				cssChildRow      : 'tablesorter-childRow', // class name indiciating that a row is to be attached to the its parent 
+				cssChildRow      : 'tablesorter-childRow', // class name indiciating that a row is to be attached to the its parent
 				cssIcon          : 'tablesorter-icon',     //  if this class exists, a <i> will be added to the header automatically
 				cssInfoBlock     : 'tablesorter-infoOnly', // don't sort tbody with this class name (only one class name allowed here!)
 
