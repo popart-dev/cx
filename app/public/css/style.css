@@ -1,4 +1,6 @@
-.dirContainer {
+    /* color scheme: http://colorschemedesigner.com/#3u21Tw0w0w0w0 */
+
+    .dirContainer {
     }
 
     .dirContainer .row {
@@ -14,15 +16,15 @@
     }
 
     .dir-entries {
-      height: 100%;
-      overflow-y: scroll;
+      max-height: 30em;
+      border: solid 1px #65a8d1;
+      padding: 8px;
+      overflow: scroll;
     }
 
     .dir-entry {
       margin: 6px;
-      background-color: white;
     }
-
 
     #localFiles .dir-entry i.icon-remove {
       /* for now, we do not support local removal */
@@ -30,6 +32,7 @@
     }
 
     .dir-entry {
+      padding-left: 10px;
     }
 
     .dir-entry.dir {
@@ -41,6 +44,7 @@
     .fileDropRoot {
       border: solid 3px transparent;
       padding: 12px;
+      padding-left: 0px;
       font-family: 'Andale Mono', monospace;
     }
 
@@ -65,22 +69,20 @@
     }
 
   .login-btn {
-    height: 11em;
-    width: 10em;
+    height: 22em;
+    width: 20em;
     margin: 6px;
     display: block;
     position: relative;
-    white-space: normal;
 
-/* color scheme: http://colorschemedesigner.com/#3u21Tw0w0w0w0 */
+
   }
 
-  h1.landing {
-    text-align: center;
-    font-size: 4em;
-    padding-top: .25em;
-     color: black;
-   }
+  .landing-title{
+    text-align: right;
+    font-size: 2em;
+    padding-right: 12em;
+  }
 
   .cloud-image{
     z-index: -1;
@@ -88,12 +90,12 @@
     padding-left: 10em;
   }
   .sub-header{
-    color: black;
     text-align: center;
     position: relative;
-    padding-top: 1em;
-    padding-bottom: .25em;
+    padding-top: 2em;
+    padding-bottom: 2em;
   }
+
 body {
       background: #00aa77;
       background-image: url("/img/ZenBG-1.png"), url("/img/ZenBG-2.png");
