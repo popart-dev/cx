@@ -31,6 +31,12 @@ app.use(express.bodyParser());
 // serve static files first
 app.use(express.static(__dirname + '/public'));
 
+app.use(function(req, res, next){ 
+  res.locals.flash = req.session.flash; 
+  delete req.session.flash;
+  next();
+});
+
 app.get('/',function(req,res) {
   res.render('landingpage');
 });
@@ -44,9 +50,19 @@ app.post('/login', function (req, res) {
     error = true
   }
   if(error) {
-    res.redirect('/')
+    req.session.flash = {
+      type: 'danger',
+      intro: 'Validation error!',
+      message: 'The name or password you entered were not valid.',
+    };
+    return res.redirect('/');
   } else {
-    res.redirect('/account/' + req.session.azureAccount.name);  
+    req.session.flash = {
+      type: 'success',
+      intro: 'Congratulations!',
+      message: 'You have successfully logged in.',
+    };
+    return res.redirect('/account/' + req.session.azureAccount.name);  
   }
 });
 
