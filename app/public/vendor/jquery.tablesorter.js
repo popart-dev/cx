@@ -32,7 +32,7 @@
 
 				// *** appearance
 				theme            : 'default',  // adds tablesorter-{theme} to the table for styling
-				widthFixed       : false,      // adds colgroup to fix widths of columns
+				widthFixed       : true,      // adds colgroup to fix widths of columns
 				showProcessing   : false,      // show an indeterminate timer icon in the header when the table is sorted or filtered.
 
 				headerTemplate   : '{content}',// header layout template (HTML ok); {content} = innerHTML, {icon} = <i/> (class from cssIcon)
