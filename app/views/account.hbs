@@ -3,14 +3,14 @@
 
 <div class="row">
 
-	<div class="span6 dirContainer">
+	<div class="col-md-6 dirContainer">
 		<h3>Local Files</h3>
-		<button class="hiddenFiles btn btn-success">Show Hidden Files</button>
+		<button class="hiddenFiles btn btn-default">Show Hidden Files</button>
 		<div id="localFiles" class="dirContent">
 		</div>
 	</div>
 
-	<div class="span6 dirContainer">
+	<div class="col-md-6 dirContainer">
 		<h3>Azure Storage</h3>
 		<div id="azureStorage" class="dirContent">
 		</div>
@@ -130,22 +130,12 @@
 		});
 
 		$('.hiddenFiles').click(function(){
-			$(this).text(function(i, text){
-			  return text === "Hide Hidden Files" ? "Show Hidden Files" : "Hide Hidden Files";
-			})
-
-	  	$('[data-hidden="true"]').toggle(
-        function(){
-          $('[data-hidden="true"]').show();
-          $('a').data('hidden', "false");
-        },
-        function(){
-          $('[data-hidden="false"]').hide();
-          $('a').data('hidden', "true");
-        }
-	  	);	
-	
+			if($('[data-hidden="true"]').is(":hidden")){
+		  	$(".hiddenFiles").text("Hide Hidden Files")
+			} else {
+			  $(".hiddenFiles").text("Show Hidden Files")
+			}
+	  	$('[data-hidden="true"]').slideToggle();
 		});
-
 	});
 </script>

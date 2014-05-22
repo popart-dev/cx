@@ -7,6 +7,7 @@ var fs = require('fs'),
   exphbs  = require(__dirname + '/../'), // "express3-handlebars"
   hbsHelpers = require(__dirname + '/hbs_helpers'),
   azure = require('azure'),
+  moment = require('moment'),
   app = express(),
   hbs;
 
@@ -85,7 +86,7 @@ function getLocalDir( path ) {
         isDirectory: stats.isDirectory(),
         isHidden: process.platform!=='win32' && fname[0]==='.',   // currently do not support Windows hidden files
         size: stats.size,
-        mtime: stats.mtime
+        mtime: moment(stats.mtime).format('L')
       } );
   });
   return dir;
@@ -174,7 +175,7 @@ function refreshAzureCache( account, containerName, done ) {
   blobService.listBlobs(containerName,function(err,blobs){
     // TODO: error handling
     blobs.forEach(function(blob){
-      container.files.push( blob.name );
+      container.files.push( blob );
     });
     // note that we don't construct the dir; that's done on a JIT basis in getAzureVirtualDirectoryEntries
     _azureCache[account.name] = _azureCache[account.name] || {};
@@ -220,9 +221,9 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
   }];
   dir = azureParts.dir;
   if( dir !== '' ) dir = dir + '/';
-  files.forEach(function(azureName){
-    if( azureName.indexOf( dir )!==0 ) return;
-    var remainder = azureName.substr( dir.length );
+  files.forEach(function(azureBlob){
+    if( azureBlob.name.indexOf( dir )!==0 ) return;
+    var remainder = azureBlob.name.substr( dir.length );
     var slashIdx = remainder.indexOf('/');
     if( slashIdx>=0 ) {
       // subdirectory
@@ -235,7 +236,7 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         isHidden: false,
         show: true,
         size: 0,
-        mtime: null,  // TODO
+        mtime: azureBlob.properties['last-modified'],  // TODO
       });
       subdirsProcessed[subdir] = true;
     } else {
@@ -247,8 +248,8 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         url: 'http://' + account.name + '.blob.core.windows.net' + path,
         isDirectory: false,
         isHidden: false,
-        size: null,   // TODO
-        mtime: null,  // TODO
+        size: azureBlob.properties['content-length'],   // TODO
+        mtime: azureBlob.properties['last-modified'],  // TODO
       });
     }
   });
@@ -285,12 +286,13 @@ function getAzureDir( account, path, fn, forceRefresh ) {
     getAzureDirFromCache( account, path, fn );
 }
 
-app.get('/api/azure/ls', function(req,res){
-    var forceRefresh = req.query.refresh && !req.query.refresh.trim().match(/0|false|no/i);
-    getAzureDir( getCurrentAzureAccount(req), req.query.path, function(dir) {
-      res.json( dir );
-    },forceRefresh);
-});
+function prettySize(size){
+  if(size < 1000) return size.toFixed(0) + ' B';
+  if(size < 1000000) return (size/1024).toFixed(2) + ' kB';
+  if(size < 1000000000) return (size/1048576).toFixed(2) + ' MB';
+  if(size < 1000000000000) return (size/1073741824).toFixed(2) + ' GB';
+  return (size/1000000000000).toFixed(2) + ' TB';
+}
 
 app.get('/api/azure/upload', function(req,res){
   var account = getCurrentAzureAccount(req);
@@ -299,17 +301,32 @@ app.get('/api/azure/upload', function(req,res){
   var blobService = azure.createBlobService( account.name, account.key );
   var azureParts = getAzureParts( dst );
   blobService.createBlockBlobFromFile( azureParts.container, azureParts.azureName, src, function(err,blob) {
+    var cache = _azureCache[account.name][azureParts.container].files;
     if( err ) {
       console.error( "Unable to upload %s to %s.", src, dst );
       res.json( { error: 'Server error uploading file.' } );
     } else {
       // TODO: uuuuuugly
       if( _azureCache[account.name] &&
-        _azureCache[account.name][azureParts.container] &&
-        _azureCache[account.name][azureParts.container].files &&
-        _azureCache[account.name][azureParts.container].files.indexOf( blob.blob ) < 0 ) {
-        _azureCache[account.name][azureParts.container].files.push( blob.blob );
+        _azureCache[account.name][azureParts.container] && cache && cache.indexOf( blob.blob ) < 0 ) {
+          blobService.listBlobs(azureParts.container, function(err,blobs){
+          var fileName = dst.replace("/" + azureParts.container + "/", "");
+          var newblob = blobs.filter(function(blob){ return blob.name == fileName; })[0];
+            if(newblob === undefined) {
+              res.json( {error: "Something went wrong."})
+            }
+            for(var i = 0; i < cache.length; i++) {
+              if(cache[i].name == fileName) {
+                cache[i] = newblob
+                return;
+              }
+            }
+            cache.push(newblob);
+          });
+          
         res.json( { message: 'File uploaded successfully.' } );
+      } else {
+        res.json( { error: 'Unable to upload file.' }) ;
       }
     }
   });
@@ -334,7 +351,13 @@ app.get('/api/azure/delete', function(req,res) {
         res.json( { error: error } );
       } else {
         if( _azureCache[account.name] && _azureCache[account.name][azureParts.container] && _azureCache[account.name][azureParts.container].files ) {
-          var idx = _azureCache[account.name][azureParts.container].files.indexOf( azureParts.azureName );
+          var idx;
+          for(var i = 0; i < _azureCache[account.name][azureParts.container].files.length; i++) {
+            if (_azureCache[account.name][azureParts.container].files[i].name === azureParts.azureName) {
+              idx = i;
+              break;
+            }
+          }
           idx>=0 && _azureCache[account.name][azureParts.container].files.remove( idx );
         }
         res.json( { message: 'File deleted successfully.' } );
@@ -355,6 +378,10 @@ app.get('/partials/local/dir', function(req,res){
   var path = req.query.path;
   var dir = getLocalDir(path);
   dir.layout = false;
+  dir.entries.forEach(function(f){
+    f.prettySize = prettySize(f.size);
+    f.prettyDate = moment(new Date(f.mtime)).format('L');
+  });
   res.render('_partials/dir_listing', dir);
 });
 
@@ -362,6 +389,10 @@ app.get('/partials/azure/dir', function(req,res){
   var path = req.query.path;
   getAzureDir( getCurrentAzureAccount(req), path, function(dir) {
     dir.layout = false;
+    dir.entries.forEach(function(f){
+      f.prettySize = prettySize(parseInt(f.size));
+      f.prettyDate = moment(new Date(f.mtime)).format('L');
+    });
     res.render('_partials/dir_listing', dir);
   });
 });

@@ -5,9 +5,11 @@
 			{{#if isDirectory}}
 				<div class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}">{{name}}</a></div>
 			{{else}}
-				<div class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}">
-					<a href="{{url}}">{{name}}</a>
-					<a href="#" data-path="{{path}}"><i class="icon-remove"></i></a>
+				<div class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}" data-blobsize="{{size}}">
+					<a href="{{url}}">{{name}}</a> {{prettySize}} <span class="big-size"></span><span class="modified"> • {{prettyDate}}</span>
+					
+					<a href="#" data-path="{{path}}" data-action="delete"><span class="glyphicon glyphicon-remove"></span></a>
+					
 				</div>
 			{{/if}}
 		{{/each}}
