@@ -1,40 +1,43 @@
 {
-    "name"          : "cx",
-    "description"   : "Cloud transfer utility: for transfering files/blobs to and from the cloud.",
-    "author"        : "Pop Art (http://popart.com)",
-    "contributors"  : [
-        "Ethan Brown <ethan.brown@popart.com>",
-		"Andrew Hallberg <hallbergandrew@gmail.com>",
-		"Liz Tom <liz.tom@gmail.com>"
-    ],
-    "licenses"      : [
-        { "type": "GPL", "url": "http://www.gnu.org/licenses/gpl.html" }
-    ],
-    "version"       : "0.0.4beta",
-    "keywords"      : [
-        "azure",
-        "cloud",
-        "file"
-    ],
-    "repository"    : "https://github.com/popart-dev/cx.git",
-    "poreferGlobal" : "true",
-    "bin"           : {
-        "cxs" : "./app/cxs.js"
-    },
-
-
-    "engines": {
-        "node": ">=0.8"
-    },
-
-     "dependencies": {
-        "async"     : "~0.2",
-        "glob"      : "3.x",
-        "express"   : "3.x",
-        "semver"    : "1.x",
-        "handlebars": "1.x",
-        "azure"     : "~0.7",
-        "nomnom"    : "~1"
+  "name": "cx",
+  "description": "Cloud transfer utility: for transfering files/blobs to and from the cloud.",
+  "author": "Pop Art (http://popart.com)",
+  "contributors": [
+    "Ethan Brown <ethan.brown@popart.com>",
+    "Andrew Hallberg <hallbergandrew@gmail.com>",
+    "Liz Tom <liz.tom@gmail.com>"
+  ],
+  "licenses": [
+    {
+      "type": "GPL",
+      "url": "http://www.gnu.org/licenses/gpl.html"
     }
-
+  ],
+  "version": "0.0.4beta",
+  "keywords": [
+    "azure",
+    "cloud",
+    "file"
+  ],
+  "repository": "https://github.com/popart-dev/cx.git",
+  "poreferGlobal": "true",
+  "bin": {
+    "cxs": "./app/cxs.js"
+  },
+  "engines": {
+    "node": ">=0.8"
+  },
+  "dependencies": {
+    "async": "~0.2",
+    "glob": "3.x",
+    "express": "^4.3.0",
+    "semver": "1.x",
+    "handlebars": "1.x",
+    "azure": "~0.7",
+    "nomnom": "~1",
+    "moment": "^2.6.0",
+    "cookie-parser": "^1.1.0",
+    "express-session": "^1.2.0",
+    "body-parser": "^1.2.0"
+  }
 }
