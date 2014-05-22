@@ -32,13 +32,34 @@ app.use(require('body-parser')());
 // serve static files first
 app.use(express.static(__dirname + '/public'));
 
+app.use(function(req, res, next){ 
+  res.locals.flash = req.session.flash; 
+  delete req.session.flash;
+  next();
+});
+
 app.get('/',function(req,res) {
   res.render('landingpage');
 });
 
 app.post('/login', function (req, res) {
   req.session.azureAccount = { name: req.body.accountName, key: req.body.accountKey };
-  res.redirect('/account/' + req.session.azureAccount.name);
+  try {
+    getAzureBlobService(req) 
+    req.session.flash = {
+      type: 'success',
+      intro: 'Congratulations!',
+      message: 'You have successfully logged in.',
+    };
+    return res.redirect('/account/' + req.session.azureAccount.name); 
+  } catch(err) {
+    req.session.flash = {
+      type: 'danger',
+      intro: 'Validation error!',
+      message: 'The name or password you entered were not valid.',
+    };
+    return res.redirect('/');
+  }
 });
 
 function getCurrentAzureAccount(req) {
