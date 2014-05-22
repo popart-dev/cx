@@ -8,11 +8,13 @@
 		<tr>
 			{{#if isDirectory}}
 				<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}">{{name}}</a></td>
+				<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}">10</td>
 			{{else}}
 				<td class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}">
 					<a href="{{url}}">{{name}}</a>
 					<a href="#" data-path="{{path}}"><i class="icon-remove"></i></a>
 				</td>
+				<td class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}">11</td>
 			{{/if}}
 			</tr>
 		{{/each}}
@@ -25,7 +27,9 @@
 	$(document).ready(function() {
 
     // call the tablesorter plugin
+
     $("table").tablesorter();
 		$('[data-hidden="true"]').hide();
+
 	});
 </script>
