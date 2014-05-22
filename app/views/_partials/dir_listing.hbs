@@ -15,8 +15,8 @@
 			{{else}}
 				<td class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}" data-blobsize="{{size}}">
 					<a href="{{url}}">{{name}}</a>
-				<td data-hidden="{{isHidden}}" >{{prettySize}}</td>
-				<td data-hidden="{{isHidden}}" ><span class="modified"> • {{prettyDate}}</span></td>
+				<td data-hidden="{{isHidden}}" data-text="{{size}}" >{{prettySize}}</td>
+				<td data-hidden="{{isHidden}}" ><span class="modified">{{prettyDate}}</span></td>
 
 					<td data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}" data-action="delete"><span class="glyphicon glyphicon-remove"></span></a></td>
 
