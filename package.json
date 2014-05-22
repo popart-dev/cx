@@ -30,11 +30,14 @@
   "dependencies": {
     "async": "~0.2",
     "glob": "3.x",
-    "express": "3.x",
+    "express": "^4.3.0",
     "semver": "1.x",
     "handlebars": "1.x",
     "azure": "~0.7",
     "nomnom": "~1",
-    "moment": "^2.6.0"
+    "moment": "^2.6.0",
+    "cookie-parser": "^1.1.0",
+    "express-session": "^1.2.0",
+    "body-parser": "^1.2.0"
   }
 }
