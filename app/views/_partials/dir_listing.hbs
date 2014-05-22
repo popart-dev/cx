@@ -2,22 +2,25 @@
 	<div class="dir-header">{{path}}</div>
 	<div class="dir-entries white">
 		<table cellspacing="1" id="sortme" class="tablesorter table table-striped">
-			<thead><tr><th>File Name</th><th>Size</th></tr></thead>
+			<thead><tr><th>File Name</th><th>Size</th><th>Date</th><th>Delete</th></tr></thead>
 			<tbody>
 		{{#each entries}}
 		<tr>
 			{{#if isDirectory}}
 				<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}">{{name}}</a></td>
-				<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}">10</td>
+				<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}">-</td>
+				<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}">-</td>
+				<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}">-</td>
+
 			{{else}}
 				<td class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}" data-blobsize="{{size}}">
 					<a href="{{url}}">{{name}}</a>
 				<td data-hidden="{{isHidden}}" >{{prettySize}}</td>
-					<td data-hidden="{{isHidden}}" ><span class="modified"> • {{prettyDate}}</span></td>
+				<td data-hidden="{{isHidden}}" ><span class="modified"> • {{prettyDate}}</span></td>
 
-					<a href="#" data-path="{{path}}" data-action="delete"><span class="glyphicon glyphicon-remove"></span></a>
+					<td data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}" data-action="delete"><span class="glyphicon glyphicon-remove"></span></a></td>
 
-				</td>
+
 			{{/if}}
 			</tr>
 		{{/each}}

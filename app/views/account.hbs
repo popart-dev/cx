@@ -131,22 +131,6 @@
 		});
 
 		$('.hiddenFiles').click(function(){
-
-			$(this).text(function(i, text){
-			  return text === "Hide Hidden Files" ? "Show Hidden Files" : "Hide Hidden Files";
-			})
-
-	  	$('[data-hidden="true"]').toggle(
-        function(){
-          $('[data-hidden="true"]').show();
-          $('a').data('hidden', "false");
-        },
-        function(){
-          $('[data-hidden="false"]').hide();
-          $('a').data('hidden', "true");
-        }
-	  	);
-
 			if($('[data-hidden="true"]').is(":hidden")){
 		  	$(".hiddenFiles").text("Hide Hidden Files")
 			} else {
