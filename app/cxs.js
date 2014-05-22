@@ -43,26 +43,21 @@ app.get('/',function(req,res) {
 
 app.post('/login', function (req, res) {
   req.session.azureAccount = { name: req.body.accountName, key: req.body.accountKey };
-  var error;
   try {
     getAzureBlobService(req) 
+    req.session.flash = {
+      type: 'success',
+      intro: 'Congratulations!',
+      message: 'You have successfully logged in.',
+    };
+    return res.redirect('/account/' + req.session.azureAccount.name); 
   } catch(err) {
-    error = true
-  }
-  if(error) {
     req.session.flash = {
       type: 'danger',
       intro: 'Validation error!',
       message: 'The name or password you entered were not valid.',
     };
     return res.redirect('/');
-  } else {
-    req.session.flash = {
-      type: 'success',
-      intro: 'Congratulations!',
-      message: 'You have successfully logged in.',
-    };
-    return res.redirect('/account/' + req.session.azureAccount.name);  
   }
 });
 
