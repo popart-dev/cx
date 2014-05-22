@@ -25,9 +25,9 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 
-app.use(express.cookieParser());
-app.use(express.session({ secret: '4d28b3a2-63ef-4d11-af60-dea75d342871' }));
-app.use(express.bodyParser());
+app.use(require('cookie-parser')());
+app.use(require('express-session')({ secret: '4d28b3a2-63ef-4d11-af60-dea75d342871' }));
+app.use(require('body-parser')());
 
 // serve static files first
 app.use(express.static(__dirname + '/public'));
@@ -371,7 +371,7 @@ app.get('/api/azure/delete', function(req,res) {
 });
 
 app.get('/account/:name', function(req,res) {
- res.render('account');
+  res.render('account');
 });
 
 app.get('/partials/local/dir', function(req,res){
