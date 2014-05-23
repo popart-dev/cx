@@ -72,6 +72,7 @@ h1.landing {
   position: absolute;
   padding-left: 10em;
 }
+
 .sub-header {
   text-align: center;
   position: relative;
@@ -104,3 +105,27 @@ h2.full-dir {
  border-top: 1px solid #dddddd; 
 }
 
+table thead th {
+  background-repeat: no-repeat;
+  background-position: center left;
+}
+
+.tablesorter-headerAsc {
+  background-image: url("/img/ice-asc.gif"); 
+}
+
+.tablesorter-headerDesc {
+  background-image: url("/img/ice-desc.gif"); 
+}
+
+.tablesorter-headerUnSorted {
+  background-image: url("/img/ice-unsorted.gif");
+}
+
+.tablesorter-header-inner {
+  padding-left: 10px;
+}
+
+.no-arrows {
+  background-image: none;
+}
