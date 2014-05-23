@@ -7,10 +7,10 @@
 			<table cellspacing="1" id="sortme" class="tablesorter table table-condensed">
 				<thead>
 					<tr>
-						<th>File Name</th>
-						<th>Date</th>
-						<th>Size</th>
-						<th>Delete</th>
+						<th class="col-md-6">File Name</th>
+						<th class="col-md-3">Date Modified</th>
+						<th class="col-md-2">Size</th>
+						<th class="col-md-1">Delete</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -34,9 +34,11 @@
 							<td class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}" data-blobsize="{{size}}"><a href="{{url}}">{{name}}</a></td>
 							<td data-hidden="{{isHidden}}" ><span class="modified">{{prettyDate}}</span></td>
 							<td data-hidden="{{isHidden}}" data-text="{{size}}" >{{prettySize}}</td>
+								<td data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}" data-action="delete">
 							{{#if isRemote}}
-								<td data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}" data-action="delete"><span class="glyphicon glyphicon-remove"></span></a></td>
+								<span class="glyphicon glyphicon-remove"></span>
 							{{/if}}
+							</a></td>
 						{{/if}}
 				</tr>
 			{{/each}}
