@@ -11,6 +11,7 @@ body {
 .panel {
   z-index: 0;
 }
+
 .dir-entries {
   max-height: 30em;
   overflow: scroll;
@@ -58,9 +59,7 @@ body {
   display: block;
   position: relative;
   white-space: normal;
-
-/* color scheme: http://colorschemedesigner.com/#3u21Tw0w0w0w0 */
-  }
+}
 
 h1.landing {
   text-align: center;
