@@ -46,11 +46,6 @@ app.post('/login', function (req, res) {
   req.session.azureAccount = { name: req.body.accountName, key: req.body.accountKey };
   try {
     getAzureBlobService(req)
-    req.session.flash = {
-      type: 'success',
-      intro: 'Congratulations!',
-      message: 'You have successfully logged in.',
-    };
     return res.redirect('/account/' + req.session.azureAccount.name);
   } catch(err) {
     req.session.flash = {
