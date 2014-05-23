@@ -427,14 +427,19 @@ app.get('/partials/local/dir', function(req,res){
 
 app.get('/partials/azure/dir', function(req,res){
   var path = req.query.path;
-  getAzureDir( getCurrentAzureAccount(req), path, function(dir) {
-    dir.layout = false;
-    dir.entries.forEach(function(f){
-      f.prettySize = prettySize(parseInt(f.size));
-      f.prettyDate = moment(new Date(f.mtime)).format('L');
+  try {
+    getAzureDir( getCurrentAzureAccount(req), path, function(dir) {
+      dir.layout = false;
+      dir.entries.forEach(function(f){
+        f.prettySize = prettySize(parseInt(f.size));
+        f.prettyDate = moment(new Date(f.mtime)).format('L');
+      });
+      return res.render('_partials/dir_listing', dir);
     });
-    res.render('_partials/dir_listing', dir);
-  });
+  } catch(err) {
+    console.log('ERROR: Please log back into your Azure account.');
+    return res.render('_partials/dir_listing_error');
+  }
 });
 
 var opts = require('nomnom')

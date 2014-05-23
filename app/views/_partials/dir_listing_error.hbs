@@ -1,0 +1,34 @@
+<div class="error-message">
+<h1>ERROR</h1>
+<h3>Please log back into your Azure Account</h3>
+<hr>
+<button class="btn btn-default" data-toggle="modal" data-target="#myModal">Login</button>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Azure Login</h4>
+      </div>
+      <div class="modal-body">
+        <h1>Microsoft Azure Storage Explorer</h1>
+        <form role="form" action="/login" method="post">
+          <div class="form-group">
+            <label for="accountName">Account:</label>
+            <input class="form-control" type="text" name="accountName" id="accountName" />
+          </div>
+          <div class="form-group">
+            <label for="accountKey">Key:</label>
+            <input class="form-control" type="password" name="accountKey" id="accountKey" />
+          </div>
+          <div>
+            <input class="btn btn-success" type="submit" value="Connect" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
