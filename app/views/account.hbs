@@ -1,7 +1,5 @@
-
-
-
 <div class="row">
+
 
 	<div class="col-md-6 dirContainer">
 		<h3>Local Files</h3>
@@ -89,7 +87,8 @@
 	}
 
 	function refreshLocal(path) {
-		if( !path ) path = '~';
+				if( !path ) path = '~';
+
 		$('#localFiles').load( '/partials/local/dir?path=' + encodeURIComponent(path), null, function() {
 			refreshDragDrop();
 		} );
@@ -107,11 +106,13 @@
 
 		refreshLocal();
 		refreshAzure();
-      
+
+
 		$('#localFiles').on('click','a',function(){
 			var path = $(this).data('path');
 			if( path ) refreshLocal(path);
 		});
+
 
 		$('#azureStorage').on('click','a',function(){
 			var action = $(this).data('action');
@@ -138,4 +139,5 @@
 	  	$('[data-hidden="true"]').slideToggle();
 		});
 	});
+
 </script>

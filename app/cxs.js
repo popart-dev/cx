@@ -32,8 +32,8 @@ app.use(require('body-parser')());
 // serve static files first
 app.use(express.static(__dirname + '/public'));
 
-app.use(function(req, res, next){ 
-  res.locals.flash = req.session.flash; 
+app.use(function(req, res, next){
+  res.locals.flash = req.session.flash;
   delete req.session.flash;
   next();
 });
@@ -45,13 +45,13 @@ app.get('/',function(req,res) {
 app.post('/login', function (req, res) {
   req.session.azureAccount = { name: req.body.accountName, key: req.body.accountKey };
   try {
-    getAzureBlobService(req) 
+    getAzureBlobService(req)
     req.session.flash = {
       type: 'success',
       intro: 'Congratulations!',
       message: 'You have successfully logged in.',
     };
-    return res.redirect('/account/' + req.session.azureAccount.name); 
+    return res.redirect('/account/' + req.session.azureAccount.name);
   } catch(err) {
     req.session.flash = {
       type: 'danger',
@@ -239,6 +239,7 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
     isHidden: false,
     size: null,
     mtime: null,
+    keepMe: true,
   }];
   dir = azureParts.dir;
   if( dir !== '' ) dir = dir + '/';
@@ -271,6 +272,7 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         isHidden: false,
         size: azureBlob.properties['content-length'],   // TODO
         mtime: azureBlob.properties['last-modified'],  // TODO
+        isRemote: true,
       });
     }
   });
@@ -344,7 +346,7 @@ app.get('/api/azure/upload', function(req,res){
             }
             cache.push(newblob);
           });
-          
+
         res.json( { message: 'File uploaded successfully.' } );
       } else {
         res.json( { error: 'Unable to upload file.' }) ;
