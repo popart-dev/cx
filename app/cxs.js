@@ -118,6 +118,11 @@ app.get('/api/local/ls', function(req,res){
   } catch( ex ) {
     console.error( 'Error listing local path: "' + req.query.path + '"' );
     console.error( ex );
+    req.session.flash = {
+      type: 'danger',
+      intro: 'Error!',
+      message: 'There was a problem listing your local directory.',
+    };
     res.json( { error: 'Unable to list path.' } );
   }
 });
@@ -325,6 +330,11 @@ app.get('/api/azure/upload', function(req,res){
     var cache = _azureCache[account.name][azureParts.container].files;
     if( err ) {
       console.error( "Unable to upload %s to %s.", src, dst );
+      req.session.flash = {
+        type: 'danger',
+        intro: 'Server Error!',
+        message: 'There was a problem uploading your file.',
+      };
       res.json( { error: 'Server error uploading file.' } );
     } else {
       // TODO: uuuuuugly
@@ -344,9 +354,13 @@ app.get('/api/azure/upload', function(req,res){
             }
             cache.push(newblob);
           });
-
         res.json( { message: 'File uploaded successfully.' } );
       } else {
+        req.session.flash = {
+          type: 'danger',
+          intro: 'Error!',
+          message: 'There was a problem uploading your file.',
+        };
         res.json( { error: 'Unable to upload file.' }) ;
       }
     }
@@ -387,6 +401,11 @@ app.get('/api/azure/delete', function(req,res) {
   } else {
     var msg = 'Unable to delete blob ' + req.query.path;
     console.warn( msg );
+    req.session.flash = {
+      type: 'danger',
+      intro: 'Error!',
+      message: msg,
+    };
     res.json( { error: msg } );
   }
 });
