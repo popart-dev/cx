@@ -96,7 +96,8 @@ function getLocalDir( path ) {
     isDirectory: true,
     isHidden: false,
     size: 0,
-    mtime: null
+    mtime: null,
+    isRoot: true,
   });
   fs.readdirSync( dir.path ).forEach(function(fname){
       var entryPath = dir.path + fname;
@@ -240,6 +241,8 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
     size: null,
     mtime: null,
     keepMe: true,
+    isRoot: true,
+    isRemote: true,
   }];
   dir = azureParts.dir;
   if( dir !== '' ) dir = dir + '/';
