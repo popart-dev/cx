@@ -122,6 +122,10 @@ table thead th {
   background-image: url("/img/ice-unsorted.gif");
 }
 
+.no-arrows .tablesorter-header-inner {
+  padding-left: 0px;
+}
+
 .tablesorter-header-inner {
   padding-left: 10px;
 }
@@ -129,3 +133,4 @@ table thead th {
 .no-arrows {
   background-image: none;
 }
+
