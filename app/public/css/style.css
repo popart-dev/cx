@@ -35,7 +35,6 @@ body {
   border: solid 3px transparent;
   padding: 12px;
   padding-left: 0px;
-  /*font-family: 'Andale Mono', monospace;*/
 }
 
 .fileDropRoot.dropHint {
