@@ -42,6 +42,13 @@ app.get('/',function(req,res) {
   res.render('landingpage');
 });
 
+app.get('/logout', function(req, res) {
+  req.session.destroy(function(err) {
+});
+  res.render('landingpage');
+
+});
+
 app.post('/login', function (req, res) {
   req.session.azureAccount = { name: req.body.accountName, key: req.body.accountKey };
   try {
@@ -345,9 +352,12 @@ app.get('/api/azure/upload', function(req,res){
               }
             }
             cache.push(newblob);
+
+
           });
 
         res.json( { message: 'File uploaded successfully.' } );
+
       } else {
         res.json( { error: 'Unable to upload file.' }) ;
       }
