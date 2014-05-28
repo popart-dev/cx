@@ -94,11 +94,12 @@
   .sub-header{
     text-align: center;
     position: relative;
-    padding-top: 2em;
-    padding-bottom: 2em;
+    padding-top: .25em;
+    padding-bottom: .25em;
   }
 
 body {
+    padding-top: 65px;
       background: #00aa77;
       background-image: url("/img/ZenBG-1.png"), url("/img/ZenBG-2.png");
       background-repeat: repeat-x, repeat;
@@ -118,3 +119,9 @@ h2.full-dir {
 #azureStorage{
   padding-top: 30px;
 }
+table thead th{
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+  }
+

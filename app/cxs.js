@@ -43,8 +43,7 @@ app.get('/',function(req,res) {
 });
 
 app.get('/logout', function(req, res) {
-  req.session.destroy(function(err) {
-});
+  req.session.destroy();
   res.render('landingpage');
 
 });
@@ -402,9 +401,13 @@ app.get('/api/azure/delete', function(req,res) {
     res.json( { error: msg } );
   }
 });
-
+// As new sessions are developed, update account verification below
 app.get('/account/:name', function(req,res) {
-  res.render('account');
+  if (req.session.azureAccount) {
+  res.render('account', {session: true});
+} else {
+  res.redirect('/');
+}
 });
 
 app.get('/partials/local/dir', function(req,res){
