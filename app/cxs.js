@@ -327,7 +327,7 @@ app.get('/api/azure/upload', function(req,res){
     var cache = _azureCache[account.name][azureParts.container].files;
     if( err ) {
       console.error( "Unable to upload %s to %s.", src, dst );
-      res.json( { error: 'Server error uploading file.' } );
+      return res.json( { error: 'Server error uploading file.' } );
     } else {
       // TODO: uuuuuugly
       if( _azureCache[account.name] &&
@@ -336,20 +336,18 @@ app.get('/api/azure/upload', function(req,res){
           var fileName = dst.replace("/" + azureParts.container + "/", "");
           var newblob = blobs.filter(function(blob){ return blob.name == fileName; })[0];
             if(newblob === undefined) {
-              res.json( {error: "Something went wrong."})
+              return res.json( {error: "Something went wrong."});
             }
             for(var i = 0; i < cache.length; i++) {
               if(cache[i].name == fileName) {
-                cache[i] = newblob
-                return;
+                cache[i] = newblob;
               }
             }
             cache.push(newblob);
+            return res.json( { message: 'File uploaded successfully.' } );
           });
-
-        res.json( { message: 'File uploaded successfully.' } );
       } else {
-        res.json( { error: 'Unable to upload file.' }) ;
+        return res.json( { error: 'Unable to upload file.' });
       }
     }
   });
