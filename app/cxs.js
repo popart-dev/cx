@@ -46,11 +46,6 @@ app.post('/login', function (req, res) {
   req.session.azureAccount = { name: req.body.accountName, key: req.body.accountKey };
   try {
     getAzureBlobService(req)
-    req.session.flash = {
-      type: 'success',
-      intro: 'Congratulations!',
-      message: 'You have successfully logged in.',
-    };
     return res.redirect('/account/' + req.session.azureAccount.name);
   } catch(err) {
     req.session.flash = {
@@ -96,7 +91,8 @@ function getLocalDir( path ) {
     isDirectory: true,
     isHidden: false,
     size: 0,
-    mtime: null
+    mtime: null,
+    isRoot: true,
   });
   fs.readdirSync( dir.path ).forEach(function(fname){
       var entryPath = dir.path + fname;
@@ -122,6 +118,11 @@ app.get('/api/local/ls', function(req,res){
   } catch( ex ) {
     console.error( 'Error listing local path: "' + req.query.path + '"' );
     console.error( ex );
+    req.session.flash = {
+      type: 'danger',
+      intro: 'Error!',
+      message: 'There was a problem listing your local directory.',
+    };
     res.json( { error: 'Unable to list path.' } );
   }
 });
@@ -240,6 +241,8 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
     size: null,
     mtime: null,
     keepMe: true,
+    isRoot: true,
+    isRemote: true,
   }];
   dir = azureParts.dir;
   if( dir !== '' ) dir = dir + '/';
@@ -327,6 +330,11 @@ app.get('/api/azure/upload', function(req,res){
     var cache = _azureCache[account.name][azureParts.container].files;
     if( err ) {
       console.error( "Unable to upload %s to %s.", src, dst );
+      req.session.flash = {
+        type: 'danger',
+        intro: 'Server Error!',
+        message: 'There was a problem uploading your file.',
+      };
       res.json( { error: 'Server error uploading file.' } );
     } else {
       // TODO: uuuuuugly
@@ -346,9 +354,13 @@ app.get('/api/azure/upload', function(req,res){
             }
             cache.push(newblob);
           });
-
         res.json( { message: 'File uploaded successfully.' } );
       } else {
+        req.session.flash = {
+          type: 'danger',
+          intro: 'Error!',
+          message: 'There was a problem uploading your file.',
+        };
         res.json( { error: 'Unable to upload file.' }) ;
       }
     }
@@ -389,6 +401,11 @@ app.get('/api/azure/delete', function(req,res) {
   } else {
     var msg = 'Unable to delete blob ' + req.query.path;
     console.warn( msg );
+    req.session.flash = {
+      type: 'danger',
+      intro: 'Error!',
+      message: msg,
+    };
     res.json( { error: msg } );
   }
 });
@@ -410,14 +427,19 @@ app.get('/partials/local/dir', function(req,res){
 
 app.get('/partials/azure/dir', function(req,res){
   var path = req.query.path;
-  getAzureDir( getCurrentAzureAccount(req), path, function(dir) {
-    dir.layout = false;
-    dir.entries.forEach(function(f){
-      f.prettySize = prettySize(parseInt(f.size));
-      f.prettyDate = moment(new Date(f.mtime)).format('L');
+  try {
+    getAzureDir( getCurrentAzureAccount(req), path, function(dir) {
+      dir.layout = false;
+      dir.entries.forEach(function(f){
+        f.prettySize = prettySize(parseInt(f.size));
+        f.prettyDate = moment(new Date(f.mtime)).format('L');
+      });
+      return res.render('_partials/dir_listing', dir);
     });
-    res.render('_partials/dir_listing', dir);
-  });
+  } catch(err) {
+    console.log('ERROR: Please log back into your Azure account.');
+    return res.render('_partials/dir_listing_error');
+  }
 });
 
 var opts = require('nomnom')

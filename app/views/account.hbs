@@ -1,24 +1,18 @@
 <div class="row">
-
-
 	<div class="col-md-6 dirContainer">
-		<h3>Local Files</h3>
+		<h2>Local Files</h2>
 		<button class="hiddenFiles btn btn-default">Show Hidden Files</button>
 		<div id="localFiles" class="dirContent">
 		</div>
 	</div>
-
 	<div class="col-md-6 dirContainer">
-		<h3>Azure Storage</h3>
+		<h2>Azure Storage</h2>
 		<div id="azureStorage" class="dirContent">
 		</div>
 	</div>
-
 </div>
 
-
 <script>
-
 	// hooray for peek!  the ever-loving companion of pop
 	Array.prototype.peek = function(){
 		if( this.length===0 ) return null;
@@ -107,12 +101,10 @@
 		refreshLocal();
 		refreshAzure();
 
-
 		$('#localFiles').on('click','a',function(){
 			var path = $(this).data('path');
 			if( path ) refreshLocal(path);
 		});
-
 
 		$('#azureStorage').on('click','a',function(){
 			var action = $(this).data('action');
