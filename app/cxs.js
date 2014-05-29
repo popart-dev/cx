@@ -341,6 +341,7 @@ app.get('/api/azure/upload', function(req,res){
             for(var i = 0; i < cache.length; i++) {
               if(cache[i].name == fileName) {
                 cache[i] = newblob;
+              return res.json({ message: 'File was overwritten'});
               }
             }
             cache.push(newblob);

@@ -24,7 +24,6 @@
 				{{#if isRemote}}
 					<td data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}" data-action="delete"><span class="glyphicon glyphicon-remove"></span></a></td>
 				{{/if}}
-
 			{{/if}}
 			</tr>
 		{{/each}}
@@ -35,12 +34,9 @@
 
 <script>
 	$(document).ready(function() {
-
-
  		var table = $("table").find('tr');
     $(".tablesorter-infoOnly").append(table[1]);
     $("table").tablesorter();
 		$('[data-hidden="true"]').hide();
-
 	});
 </script>

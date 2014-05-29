@@ -118,3 +118,9 @@ h2.full-dir {
 #azureStorage{
   padding-top: 30px;
 }
+
+.spinner {
+    vertical-align: center;
+    text-align:center;
+    z-index:1234;
+}
