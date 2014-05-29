@@ -1,36 +1,4 @@
 <div class="fileDropRoot" data-path="{{path}}">
-<<<<<<< HEAD
-	<div class="dir-header">{{path}}</div>
-	<div class="dir-entries white">
-		<table cellspacing="1" id="sortme" class="tablesorter table table-condensed">
-			<thead><tr><th>File Name</th><th>Date</th><th>Size</th><th>Delete</th></tr></thead>
-			{{#if Keepme}}
-			<tbody class="tablesorter-infoOnly">
-			</tbody>
-			{{/if}}
-			<tbody>
-		{{#each entries}}
-		<tr>
-			{{#if isDirectory}}
-				<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}">{{name}}</a></td>
-				<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}">-</td>
-				<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}">-</td>
-				<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}">-</td>
-
-			{{else}}
-				<td class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}" data-blobsize="{{size}}">
-					<a href="{{url}}">{{name}}</a></td>
-				<td data-hidden="{{isHidden}}" ><span class="modified">{{prettyDate}}</span></td>
-				<td data-hidden="{{isHidden}}" data-text="{{size}}" >{{prettySize}}</td>
-				{{#if isRemote}}
-					<td data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}" data-action="delete"><span class="glyphicon glyphicon-remove"></span></a></td>
-				{{/if}}
-			{{/if}}
-			</tr>
-		{{/each}}
-	</tbody>
-	</table>
-=======
 	<div class="panel panel-default">
 		<div class="panel-heading">	
 			<div class="dir-header">{{path}}</div>
@@ -77,7 +45,6 @@
 				</tbody>
 			</table>
 		</div>
->>>>>>> master
 	</div>
 </div>
 
