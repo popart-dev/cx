@@ -1,109 +1,83 @@
-.dirContainer {
-    }
-
-    .dirContainer .row {
-    }
-
-    .dirContent {
-    }
-
-    .fileDropRoot {
-      height: 100%;
-      min-height: 100%;
-      border: solid 2px blue;
-    }
-
-    .dir-entries {
-      max-height: 30em;
-      border: solid 1px #65a8d1;
-      padding: 8px;
-      overflow: scroll;
-    }
-
-    .dir-entry {
-      margin: 6px;
-      background-color: white;
-    }
-
-
-    #localFiles .dir-entry i.icon-remove {
-      /* for now, we do not support local removal */
-      display: none;
-    }
-
-    .dir-entry {
-      padding-left: 10px;
-    }
-
-    .dir-entry.dir {
-      /*background: #64a8d1;*/
-      border: solid 1px #64a8d1;
-      border-radius: 4px;
-    }
-
-    .fileDropRoot {
-      border: solid 3px transparent;
-      padding: 12px;
-      padding-left: 0px;
-      font-family: 'Andale Mono', monospace;
-    }
-
-    .fileDropRoot.dropHint {
-      border: solid 3px #ff8c00;
-    }
-
-    .dir-entry.dropHint {
-      background-color: #ddd;
-    }
-
-    .dir-header {
-      padding: 8px;
-      background-color: #64a8d1;
-      color: white;
-    }
-
-    .dir-entries {
-      border: solid 1px #65a8d1;
-      padding: 8px;
-      overflow: auto;
-    }
-
-  .login-btn {
-    height: 11em;
-    width: 10em;
-    margin: 6px;
-    display: block;
-    position: relative;
-    white-space: normal;
-
-/* color scheme: http://colorschemedesigner.com/#3u21Tw0w0w0w0 */
-  }
-
-  h1.landing {
-    text-align: center;
-    font-size: 4em;
-    padding-top: .25em;
-     color: black;
-   }
-
-  .cloud-image{
-    z-index: -1;
-    position: absolute;
-    padding-left: 10em;
-  }
-  .sub-header{
-    text-align: center;
-    position: relative;
-    padding-top: .25em;
-    padding-bottom: .25em;
-  }
-
 body {
-    padding-top: 65px;
-      background: #00aa77;
-      background-image: url("/img/ZenBG-1.png"), url("/img/ZenBG-2.png");
-      background-repeat: repeat-x, repeat;
-    }
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
+.fileDropRoot {
+  height: 100%;
+  min-height: 100%;
+}
+
+.panel {
+  z-index: 0;
+}
+
+.dir-entries {
+  max-height: 30em;
+  overflow: scroll;
+}
+
+.dir-entry {
+  margin: 6px;
+  background-color: white;
+}
+
+#localFiles .dir-entry i.icon-remove {
+  /* for now, we do not support local removal */
+  display: none;
+}
+
+.dir-entry {
+  padding-left: 10px;
+}
+
+.fileDropRoot {
+  border: solid 3px transparent;
+  padding: 12px;
+  padding-left: 0px;
+}
+
+.fileDropRoot.dropHint {
+  border: solid 3px #ff8c00;
+}
+
+.dir-entry.dropHint {
+  background-color: #ddd;
+}
+
+.dir-entries {
+  padding: 8px;
+  overflow: auto;
+}
+
+.login-btn {
+  height: 11em;
+  width: 10em;
+  margin: 6px;
+  display: block;
+  position: relative;
+  white-space: normal;
+}
+
+h1.landing {
+  text-align: center;
+  font-size: 4em;
+  padding-top: .25em;
+ }
+
+.cloud-image {
+  z-index: -1;
+  position: absolute;
+  padding-left: 10em;
+}
+
+.sub-header {
+  text-align: center;
+  position: relative;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
 .white {
   background-color: white;
 }
@@ -111,17 +85,51 @@ body {
 .login {
   font-size: 2em;
 }
+
 h2.full-dir {
   font-size: 2em;
   color: black;
+}
 
+#azureStorage {
+  padding-top: 37px;
 }
-#azureStorage{
-  padding-top: 30px;
+
+.display-folder-name {
+  padding-left: 5px;
 }
-table thead th{
-    background-repeat: no-repeat;
-    background-position: center right;
-    cursor: pointer;
-  }
+
+.table>tbody+tbody {
+ border-top: 1px solid #dddddd;
+}
+
+table thead th {
+  background-repeat: no-repeat;
+  background-position: center left;
+}
+
+.tablesorter-headerAsc {
+  background-image: url("/img/ice-asc.gif");
+}
+
+.tablesorter-headerDesc {
+  background-image: url("/img/ice-desc.gif");
+}
+
+.tablesorter-headerUnSorted {
+  background-image: url("/img/ice-unsorted.gif");
+}
+
+.no-arrows .tablesorter-header-inner {
+  padding-left: 0px;
+}
+
+.tablesorter-header-inner {
+  padding-left: 10px;
+}
+
+.no-arrows {
+  background-image: none;
+}
+
 
