@@ -357,14 +357,12 @@ app.get('/api/azure/upload', function(req,res){
             return res.json( { message: 'File uploaded successfully.' } );
           });
       } else {
-          return res.json( { error: 'Unable to upload file.' });
-      } else {
         req.session.flash = {
           type: 'danger',
           intro: 'Error!',
           message: 'There was a problem uploading your file.',
         };
-        res.json( { error: 'Unable to upload file.' }) ;
+        return res.json( { error: 'Unable to upload file.' }) ;
       }
     }
   });
