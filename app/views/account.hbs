@@ -7,6 +7,7 @@
 	</div>
 	<div class="col-md-6 dirContainer">
 		<h2>Azure Storage</h2>
+		<button class="refresh-azure btn btn-default">Refresh Azure Account</button>
 		<div id="azureStorage" class="dirContent">
 		</div>
 	</div>
@@ -30,6 +31,7 @@
 		var $root = $target.closest( '.fileDropRoot' );
 		$root.find().removeClass('dropHint');
 		if( ui.draggable.hasClass('dir') ) {
+			$target.removeClass( 'dropHint' );
 			alert( 'Transferring directories currently not suported.' );
 			return;
 		}
@@ -38,6 +40,7 @@
 		var src = $(ui.draggable).data('path');
 		var dstDir = pathStack.pop();
 		if( dstDir === '/' ) {
+			$target.removeClass( 'dropHint' );
 			alert( 'You must transfer files into a container.' );
 			return;
 		}
