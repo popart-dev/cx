@@ -103,7 +103,7 @@ h2.full-dir {
 }
 
 .spinner {
-    vertical-align: center;
+    margin-top: -175px;
     text-align:center;
     z-index:1234;
 }
