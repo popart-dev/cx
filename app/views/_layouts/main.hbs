@@ -6,26 +6,17 @@
 
 	<title>{{> page/title}}</title>
 
-	<!-- jquery -->
-	<script src="/vendor/jquery-1.10.1.min.js"></script>
-
-	<!-- jquery ui -->
 	<link href="/vendor/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet">
-	<script src="/vendor/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
-
-	<!-- bootstrap -->
 	<link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
-	<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<!-- Background -->
 	<link href="/css/style.css" rel="stylesheet" type="text/css" />
-	<!-- Tablesorter -->
+
+	<script src="/vendor/jquery-1.10.1.min.js"></script>
+	<script src="/vendor/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/vendor/jquery.tablesorter.js"></script>
 </head>
 
-
-
 <body>
-
 	<div class="container" style="height:inherit;">
 	{{#if flash}}
 		<div class="alert alert-dismissible alert-{{flash.type}}"> 
@@ -34,8 +25,8 @@
 			{{{flash.message}}}
 		</div>
 	{{/if}}
-		{{{body}}}
+	
+	{{{body}}}
 	</div>
-
 </body>
 </html>

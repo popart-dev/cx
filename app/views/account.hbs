@@ -7,7 +7,6 @@
 	</div>
 	<div class="col-md-6 dirContainer">
 		<h2>Azure Storage</h2>
-		<button class="refresh-azure btn btn-default">Refresh Azure Account</button>
 		<div id="azureStorage" class="dirContent">
 		</div>
 	</div>
@@ -32,7 +31,7 @@
 		$root.find().removeClass('dropHint');
 		if( ui.draggable.hasClass('dir') ) {
 			$target.removeClass( 'dropHint' );
-			alert( 'Transferring directories currently not suported.' );
+			alert( 'Transferring directories currently not supported.' );
 			return;
 		}
 		var pathStack = getPathStack( $target );
@@ -132,6 +131,13 @@
 			  $(".hiddenFiles").text("Show Hidden Files")
 			}
 	  	$('[data-hidden="true"]').slideToggle();
+		});
+
+		$('.refresh-azure').click(function(){
+			var name = window.location.pathname;
+			$.get( name, function( data ) {
+  			refreshAzure();
+			});
 		});
 	});
 

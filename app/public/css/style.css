@@ -8,6 +8,10 @@ body {
   min-height: 100%;
 }
 
+#azureStorage {
+  padding-top: 38px;
+}
+
 .panel {
   z-index: 0;
 }
