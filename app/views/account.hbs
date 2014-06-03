@@ -8,7 +8,11 @@
 	<div class="col-md-6 dirContainer">
 		<h2>Azure Storage</h2>
 		<div id="azureStorage" class="dirContent">
+			
 		</div>
+		<div id="spinner" class="spinner" style="display:none;">
+   			<img id="img-spinner" src="/img/spinner.gif" alt="Loading"/>
+			</div>
 	</div>
 </div>
 
@@ -43,16 +47,19 @@
 		}
 		var dst = dstDir + src.match(/\/([^/]+)$/)[1];
 		pathStack = [];	// reset the path stack
+		$("#spinner").show();
 		$.ajax( '/api/azure/upload?src=' + encodeURIComponent(src) + '&dst=' + encodeURIComponent(dst), {success:function(){
-			refreshAzure( $root.data('path') );
-		}});
+				refreshAzure( $root.data('path') );
+				$("#spinner").hide();
+			}
+		});
 	}
 
 	function dropTargetOver( evt, ui ) {
 		$target = $(evt.target);
 		getPathStack( $target ).push( $target.data('path') );
 		$target.addClass( 'dropHint' );
-	}
+		}
 
 	function dropTargetOut( evt, ui ) {
 		$target = $(evt.target);

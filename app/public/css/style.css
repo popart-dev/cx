@@ -6,6 +6,9 @@ body {
 .fileDropRoot {
   height: 100%;
   min-height: 100%;
+  margin-left: 0px;
+  padding: 12px;
+  padding-left: 0px;
 }
 
 .panel {
@@ -31,14 +34,10 @@ body {
   padding-left: 10px;
 }
 
-.fileDropRoot {
-  border: solid 3px transparent;
-  padding: 12px;
-  padding-left: 0px;
-}
-
 .fileDropRoot.dropHint {
-  border: solid 3px #ff8c00;
+  border: solid 2px #d47500;
+  border-radius: 10px;
+  padding-left: 12px;
 }
 
 .dir-entry.dropHint {
@@ -101,6 +100,12 @@ h2.full-dir {
 
 .table>tbody+tbody {
  border-top: 1px solid #dddddd; 
+}
+
+.spinner {
+    margin-top: -175px;
+    text-align:center;
+    z-index:1234;
 }
 
 table thead th {
