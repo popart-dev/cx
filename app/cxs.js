@@ -329,7 +329,7 @@ function prettySize(size){
 }
 
 function prettyName(name) {
-  return (name.length > MAX_NAME_LENGTH) ? name.substring(0, MAX_NAME_LENGTH-3) + "...";
+  return (name.length > MAX_NAME_LENGTH) ? name.substring(0, MAX_NAME_LENGTH-3) + "..." : name;
 }
 
 app.get('/api/azure/upload', function(req,res){
