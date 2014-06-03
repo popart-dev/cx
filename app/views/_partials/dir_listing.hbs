@@ -31,7 +31,12 @@
 									</tbody>
 								{{/unless}}
 							{{else}}
-								<td class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}" data-blobsize="{{size}}"><a href="{{url}}">{{name}}</a></td>
+								<td class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}" data-blobsize="{{size}}">
+								{{#if isRemote}}
+									<a href="{{url}}">{{name}}</a></td>
+								{{else}}
+									<a href="#">{{name}}</a></td>
+								{{/if}}
 								<td data-hidden="{{isHidden}}" ><span class="modified">{{prettyDate}}</span></td>
 								<td data-hidden="{{isHidden}}" data-text="{{size}}" >{{prettySize}}</td>
 								<td data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}" data-action="delete">
