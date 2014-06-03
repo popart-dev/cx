@@ -375,6 +375,12 @@ Array.prototype.remove = function(from, to) {
   return this.push.apply(this, rest);
 };
 
+app.get('/api/local/delete', function(req, res){
+  var path = (req.query.path);
+  fs.unlinkSync(path);
+  res.json({ message: 'File deleted successfully.'});
+});
+
 app.get('/api/azure/delete', function(req,res) {
   var account = getCurrentAzureAccount(req);
   var blobService = azure.createBlobService( account.name, account.key );

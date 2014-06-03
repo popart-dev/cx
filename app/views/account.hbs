@@ -122,6 +122,29 @@
 			}
 		});
 
+		$('#localFiles').on('click','a',function(){
+			var action = $(this).data('action');
+			var path = $(this).data('path');
+			var $root = $(this).closest( '.fileDropRoot' );
+			if( action==='delete' ) {
+				if( confirm('This will delete your file from your computer and cannot be reversed. Are you sure?')) {
+					console.log( 'deleting ' + path );
+					if( path ) {
+						$.ajax( '/api/local/delete?path=' + encodeURIComponent(path), { 
+							success:function(){
+								refreshLocal( $root.data('path')); 			
+							},
+							completed:function(){
+								alert('hello hello');
+							}
+						});
+					}
+				}
+			} else {
+				if( path ) refreshLocal(path);
+			}
+		});
+
 		$('.hiddenFiles').click(function(){
 			if($('[data-hidden="true"]').is(":hidden")){
 		  	$(".hiddenFiles").text("Hide Hidden Files")
