@@ -11,6 +11,8 @@ var fs = require('fs'),
   app = express(),
   hbs;
 
+var MAX_NAME_LENGTH = 31;
+
 // create `ExpressHandlebars` instance with a default layout.
 hbs = exphbs.create({
     defaultLayout: 'main',
@@ -326,6 +328,10 @@ function prettySize(size){
   return (size/1000000000000).toFixed(2) + ' TB';
 }
 
+function prettyName(name) {
+  return (name.length > MAX_NAME_LENGTH) ? name.substring(0, MAX_NAME_LENGTH-3) + "..." : name;
+}
+
 app.get('/api/azure/upload', function(req,res){
   var account = getCurrentAzureAccount(req);
   var src = req.query.src;
@@ -439,6 +445,7 @@ app.get('/partials/local/dir', function(req,res){
     dir.entries.forEach(function(f){
       f.prettySize = prettySize(f.size);
       f.prettyDate = moment(new Date(f.mtime)).format('L');
+      f.prettyName = prettyName(f.name);
     });
     res.render('_partials/dir_listing', dir);
   } catch(error) {
@@ -454,6 +461,7 @@ app.get('/partials/azure/dir', function(req,res){
       dir.entries.forEach(function(f){
         f.prettySize = prettySize(parseInt(f.size));
         f.prettyDate = moment(new Date(f.mtime)).format('L');
+        f.prettyName = prettyName(f.name);
       });
       return res.render('_partials/dir_listing', dir);
     });
