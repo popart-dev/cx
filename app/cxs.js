@@ -327,10 +327,8 @@ function prettySize(size){
 }
 
 function prettyName(name) {
-  if((name.length) > 31){
-    name = name.substring(0,28) + "...";
-  } 
-  return name;
+  var MAX_NAME_LENGTH = 31;
+  return (name.length > MAX_NAME_LENGTH) ? name.substring(0, 28) + "...";
 }
 
 app.get('/api/azure/upload', function(req,res){

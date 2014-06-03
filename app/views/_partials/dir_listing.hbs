@@ -56,15 +56,11 @@
  		var table = $("table").find('tr');
     $("table").tablesorter();
 		$('[data-hidden="true"]').hide();
-		$('.name').addClass(function(){
-			var addedClass;
-			var name = $(this).data('title');
-				if(name.length > 31){	
-				addedClass = 'pretty-name';
-				}
-			return addedClass;
+		$('.name').each(function(){ 
+			if($(this).text() !== $(this).data('title')) {
+				$(this).tooltip(); 
+			}
 		});
-		$('.pretty-name').tooltip();
 	});
 
 </script>
