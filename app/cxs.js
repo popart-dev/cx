@@ -382,6 +382,12 @@ Array.prototype.remove = function(from, to) {
   return this.push.apply(this, rest);
 };
 
+app.get('/api/local/delete', function(req, res){
+  var path = (req.query.path);
+  fs.unlinkSync(path);
+  res.json({ message: 'File deleted successfully.'});
+});
+
 app.get('/api/azure/delete', function(req,res) {
   var account = getCurrentAzureAccount(req);
   var blobService = azure.createBlobService( account.name, account.key );
@@ -427,13 +433,17 @@ app.get('/account/:name', function(req,res) {
 
 app.get('/partials/local/dir', function(req,res){
   var path = req.query.path;
+  try { 
   var dir = getLocalDir(path);
   dir.layout = false;
-  dir.entries.forEach(function(f){
-    f.prettySize = prettySize(f.size);
-    f.prettyDate = moment(new Date(f.mtime)).format('L');
-  });
-  res.render('_partials/dir_listing', dir);
+    dir.entries.forEach(function(f){
+      f.prettySize = prettySize(f.size);
+      f.prettyDate = moment(new Date(f.mtime)).format('L');
+    });
+    res.render('_partials/dir_listing', dir);
+  } catch(error) {
+    return;
+  }
 });
 
 app.get('/partials/azure/dir', function(req,res){
