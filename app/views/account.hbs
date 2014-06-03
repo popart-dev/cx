@@ -34,7 +34,8 @@
 		var $root = $target.closest( '.fileDropRoot' );
 		$root.find().removeClass('dropHint');
 		if( ui.draggable.hasClass('dir') ) {
-			alert( 'Transferring directories currently not suported.' );
+			$target.removeClass( 'dropHint' );
+			alert( 'Transferring directories currently not supported.' );
 			return;
 		}
 		var pathStack = getPathStack( $target );
@@ -42,6 +43,7 @@
 		var src = $(ui.draggable).data('path');
 		var dstDir = pathStack.pop();
 		if( dstDir === '/' ) {
+			$target.removeClass( 'dropHint' );
 			alert( 'You must transfer files into a container.' );
 			return;
 		}
@@ -136,6 +138,13 @@
 			  $(".hiddenFiles").text("Show Hidden Files")
 			}
 	  	$('[data-hidden="true"]').slideToggle();
+		});
+
+		$('.refresh-azure').click(function(){
+			var name = window.location.pathname;
+			$.get( name, function( data ) {
+  			refreshAzure();
+			});
 		});
 	});
 

@@ -11,6 +11,10 @@ body {
   padding-left: 0px;
 }
 
+#azureStorage {
+  padding-top: 38px;
+}
+
 .panel {
   z-index: 0;
 }
@@ -88,10 +92,6 @@ h1.landing {
 h2.full-dir {
   font-size: 2em;
   color: black;
-}
-
-#azureStorage {
-  padding-top: 37px;
 }
 
 .display-folder-name {
