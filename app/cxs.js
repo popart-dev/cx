@@ -11,6 +11,8 @@ var fs = require('fs'),
   app = express(),
   hbs;
 
+var MAX_NAME_LENGTH = 31;
+
 // create `ExpressHandlebars` instance with a default layout.
 hbs = exphbs.create({
     defaultLayout: 'main',
@@ -327,7 +329,6 @@ function prettySize(size){
 }
 
 function prettyName(name) {
-  var MAX_NAME_LENGTH = 31;
   return (name.length > MAX_NAME_LENGTH) ? name.substring(0, 28) + "...";
 }
 
