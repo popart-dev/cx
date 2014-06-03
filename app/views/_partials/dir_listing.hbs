@@ -1,6 +1,6 @@
 <div class="fileDropRoot" data-path="{{path}}">
 	<div class="panel panel-default">
-		<div class="panel-heading">	
+		<div class="panel-heading">
 			<div class="dir-header">{{path}}</div>
 		</div>
 			<div class="dir-entries white">
@@ -56,5 +56,11 @@
  		var table = $("table").find('tr');
     $("table").tablesorter();
 		$('[data-hidden="true"]').hide();
+
+		if (navigator.platform.substring(0,3)=="Win"){
+			$('button.hiddenFiles').hide();
+			$('#azureStorage').css("padding-top", 0);
+		};
 	});
+
 </script>

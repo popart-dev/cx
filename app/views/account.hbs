@@ -8,7 +8,7 @@
 	<div class="col-md-6 dirContainer">
 		<h2>Azure Storage</h2>
 		<div id="azureStorage" class="dirContent">
-			
+
 		</div>
 		<div id="spinner" class="spinner" style="display:none;">
    			<img id="img-spinner" src="/img/spinner.gif" alt="Loading"/>
@@ -139,9 +139,9 @@
 				if( confirm('This will delete your file from your computer and cannot be reversed. Are you sure?')) {
 					console.log( 'deleting ' + path );
 					if( path ) {
-						$.ajax( '/api/local/delete?path=' + encodeURIComponent(path), { 
+						$.ajax( '/api/local/delete?path=' + encodeURIComponent(path), {
 							success:function(){
-								refreshLocal( $root.data('path')); 			
+								refreshLocal( $root.data('path'));
 							},
 							completed:function(){
 								alert('hello hello');
