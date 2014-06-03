@@ -22,20 +22,32 @@
 	<script src="/vendor/jquery.tablesorter.js"></script>
 </head>
 
-
-
 <body>
-
+	<!--Navbar-->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" formmethod="get">Cx</a>
+      <ul class="nav navbar-nav">
+      	{{#if session}}
+      	<li><a href="/logout"> Logout </a></li>
+      	{{/if}}
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Flash -->
 	<div class="container" style="height:inherit;">
-	{{#if flash}}
-		<div class="alert alert-dismissible alert-{{flash.type}}"> 
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times</button> 
-			<strong>{{flash.intro}}</strong> 
-			{{{flash.message}}}
-		</div>
-	{{/if}}
-	
-	{{{body}}}
+		{{#if flash}}
+			<div class="alert alert-dismissible alert-{{flash.type}}">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times</button>
+				<strong>{{flash.intro}}</strong>
+				{{{flash.message}}}
+			</div>
+		{{/if}}
+		
+		{{{body}}}
 	</div>
 
 </body>

@@ -1,5 +1,5 @@
 body {
-  padding-top: 20px;
+  padding-top: 70px;
   padding-bottom: 50px;
 }
 
@@ -99,7 +99,7 @@ h2.full-dir {
 }
 
 .table>tbody+tbody {
- border-top: 1px solid #dddddd; 
+ border-top: 1px solid #dddddd;
 }
 
 .spinner {
@@ -114,11 +114,11 @@ table thead th {
 }
 
 .tablesorter-headerAsc {
-  background-image: url("/img/ice-asc.gif"); 
+  background-image: url("/img/ice-asc.gif");
 }
 
 .tablesorter-headerDesc {
-  background-image: url("/img/ice-desc.gif"); 
+  background-image: url("/img/ice-desc.gif");
 }
 
 .tablesorter-headerUnSorted {
@@ -136,4 +136,5 @@ table thead th {
 .no-arrows {
   background-image: none;
 }
+
 

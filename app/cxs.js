@@ -42,6 +42,12 @@ app.get('/',function(req,res) {
   res.render('landingpage');
 });
 
+app.get('/logout', function(req, res) {
+  req.session.destroy();
+  res.render('landingpage');
+
+});
+
 app.post('/login', function (req, res) {
   req.session.azureAccount = { name: req.body.accountName, key: req.body.accountKey };
   try {
@@ -410,9 +416,13 @@ app.get('/api/azure/delete', function(req,res) {
     res.json( { error: msg } );
   }
 });
-
+// As new sessions are developed, update account verification below
 app.get('/account/:name', function(req,res) {
-  res.render('account');
+  if (req.session.azureAccount) {
+  res.render('account', {session: true});
+} else {
+  res.redirect('/');
+}
 });
 
 app.get('/partials/local/dir', function(req,res){
