@@ -95,9 +95,6 @@
 			refreshDragDrop();
 			$('[data-remote=""][data-hidden="true"]').hide();
 		} });
-				// $('#localFiles').load( '/partials/local/dir?path=' + encodeURIComponent(path), null, function() {
-		// 	refreshDragDrop();
-		// } );
 	}
 
 	function refreshAzure(path) {
@@ -114,6 +111,23 @@
 
 		refreshLocal();
 		refreshAzure();
+
+		$('#azureStorage').on('click','button',function(){
+			if($('[data-remote="true"][data-hidden="true"]').is(":hidden")){
+		  	$('#azureStorage button').text("Hide Hidden Files")
+			} else {
+			  $('#azureStorage button').text("Show Hidden Files")
+			}
+			$('[data-remote="true"][data-hidden="true"]').slideToggle();
+		});
+		$('#localFiles').on('click','button',function(){
+			if($('[data-remote=""][data-hidden="true"]').is(":hidden")){
+		  	$('#localFiles button').text("Hide Hidden Files")
+			} else {
+			  $('#localFiles button').text("Show Hidden Files")
+			}
+			$('[data-remote=""][data-hidden="true"]').slideToggle();
+		});
 
 		$('#localFiles').on('click','a',function(){
 			var path = $(this).data('path');
