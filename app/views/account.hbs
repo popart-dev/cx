@@ -93,6 +93,7 @@
 		$.ajax('/partials/local/dir?path=' + encodeURIComponent(path),{success: function(data) {
 			$("#localFiles").html(data);
 			refreshDragDrop();
+			$('[data-hidden="true"]').hide();
 		} });
 				// $('#localFiles').load( '/partials/local/dir?path=' + encodeURIComponent(path), null, function() {
 		// 	refreshDragDrop();
@@ -103,11 +104,13 @@
 		if( !path ) path = '/';
 		$('#azureStorage').load( '/partials/azure/dir?path=' + encodeURIComponent(path), null, function() {
 			refreshDragDrop();
+			$('[data-hiddenRemote="true"]').hide();
 		} );
 	}
 
 	$(document).ready(function() {
 		'use strict';
+
 
 		refreshLocal();
 		refreshAzure();
