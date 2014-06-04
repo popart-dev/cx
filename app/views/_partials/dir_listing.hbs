@@ -60,9 +60,9 @@
  		var table = $("table").find('tr');
     $("table").tablesorter();
 
-
 		{{#unless supportsHiddenFiles}}
-			$('button.hiddenFiles').hide();
+			$('#localFiles button').hide();
+			$('#localFiles').css("padding-top", 38)
 		{{/unless}}
 
 		$('.name').each(function(){

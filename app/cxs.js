@@ -241,6 +241,7 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         isHidden: false,
         size: 0,
         mtime: null,
+        supportsHiddenFiles: true,
         isRemote: true
       });
     }

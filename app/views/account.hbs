@@ -108,7 +108,6 @@
 	$(document).ready(function() {
 		'use strict';
 
-
 		refreshLocal();
 		refreshAzure();
 
@@ -120,6 +119,7 @@
 			}
 			$('[data-remote="true"][data-hidden="true"]').slideToggle();
 		});
+
 		$('#localFiles').on('click','button',function(){
 			if($('[data-remote=""][data-hidden="true"]').is(":hidden")){
 		  	$('#localFiles button').text("Hide Hidden Files")
