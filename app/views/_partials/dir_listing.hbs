@@ -114,9 +114,9 @@
 		});
 
 
-		// {{#unless supportsHiddenFiles}}
-		// 	$('button.hiddenFiles').hide();
-		// {{/unless}}
+		{{#unless supportsHiddenFiles}}
+			$('button.hiddenFiles').hide();
+		{{/unless}}
 
 		$('.name').each(function(){
 			if($(this).text() !== $(this).data('title')) {

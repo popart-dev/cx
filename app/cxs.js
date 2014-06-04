@@ -241,7 +241,6 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         isHidden: false,
         size: 0,
         mtime: null,
-        supportsHiddenFiles: true,
         isRemote: true
       });
     }
@@ -258,7 +257,7 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
     mtime: null,
     keepMe: true,
     isRoot: true,
-    isRemote: true,
+    isRemote: true
   }];
   dir = azureParts.dir;
   if( dir !== '' ) dir = dir + '/';
@@ -279,7 +278,6 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         show: true,
         size: 0,
         mtime: azureBlob.properties['last-modified'],
-        supportsHiddenFiles: true,
         isHidden: subdir[0]==='.'
       });
       subdirsProcessed[subdir] = true;
@@ -308,7 +306,8 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
       size: 0,
       mtime: null,
       entries: entries,
-      isRemote: true
+      isRemote: true,
+      supportsHiddenFiles: true
     };
 }
 
