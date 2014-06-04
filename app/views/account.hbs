@@ -1,7 +1,6 @@
 <div class="row">
 	<div class="col-md-6 dirContainer">
 		<h2>Local Files</h2>
-		<button class="hiddenFiles btn btn-default">Show Hidden Files</button>
 		<div id="localFiles" class="dirContent">
 		</div>
 	</div>
@@ -90,11 +89,14 @@
 	}
 
 	function refreshLocal(path) {
-				if( !path ) path = '~';
-
-		$('#localFiles').load( '/partials/local/dir?path=' + encodeURIComponent(path), null, function() {
+		if( !path ) path = '~';
+		$.ajax('/partials/local/dir?path=' + encodeURIComponent(path),{success: function(data) {
+			$("#localFiles").html(data);
 			refreshDragDrop();
-		} );
+		} });
+				// $('#localFiles').load( '/partials/local/dir?path=' + encodeURIComponent(path), null, function() {
+		// 	refreshDragDrop();
+		// } );
 	}
 
 	function refreshAzure(path) {
@@ -152,15 +154,6 @@
 			} else {
 				if( path ) refreshLocal(path);
 			}
-		});
-
-		$('.hiddenFiles').click(function(){
-			if($('[data-hidden="true"]').is(":hidden")){
-		  	$(".hiddenFiles").text("Hide Hidden Files")
-			} else {
-			  $(".hiddenFiles").text("Show Hidden Files")
-			}
-	  	$('[data-hidden="true"]').slideToggle();
 		});
 
 		$('.refresh-azure').click(function(){

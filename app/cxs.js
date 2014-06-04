@@ -91,7 +91,9 @@ function getLocalDir( path ) {
     isHidden: false,
     size: 0,
     mtime: null, // TODO
-    entries: []
+    entries: [],
+    supportsHiddenFiles: !process.platform.match(/^win/i),
+    isRemote: false
   };
   if( path.match(/\//g).length > 2 ) dir.entries.push({
     name: '../',
@@ -101,6 +103,7 @@ function getLocalDir( path ) {
     size: 0,
     mtime: null,
     isRoot: true,
+    isRemote: false
   });
   fs.readdirSync( dir.path ).forEach(function(fname){
       var entryPath = dir.path + fname;
@@ -111,7 +114,8 @@ function getLocalDir( path ) {
         isDirectory: stats.isDirectory(),
         isHidden: process.platform!=='win32' && fname[0]==='.',   // currently do not support Windows hidden files
         size: stats.size,
-        mtime: moment(stats.mtime).format('L')
+        mtime: moment(stats.mtime).format('L'),
+        isRemote: false
       } );
   });
   return dir;
@@ -225,7 +229,9 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
       isHidden: false,
       size: 0,
       mtime: null,
-      entries: []
+      entries: [],
+      supportsHiddenFiles: true,
+      isRemote: true
     };
     for( var container in _azureCache[account.name] ) {
       dir.entries.push({
@@ -234,7 +240,9 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         isDirectory: true,
         isHidden: false,
         size: 0,
-        mtime: null
+        mtime: null,
+        supportsHiddenFiles: true,
+        isRemote: true
       });
     }
     return dir;
@@ -267,9 +275,12 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         path: '/' + azureParts.container + '/' + dir + subdir + '/',
         isDirectory: true,
         isHidden: false,
+        isRemote: true,
         show: true,
         size: 0,
-        mtime: azureBlob.properties['last-modified'],  // TODO
+        mtime: azureBlob.properties['last-modified'],
+        supportsHiddenFiles: true,
+        isHidden: subdir[0]==='.'
       });
       subdirsProcessed[subdir] = true;
     } else {
@@ -284,6 +295,7 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
         size: azureBlob.properties['content-length'],   // TODO
         mtime: azureBlob.properties['last-modified'],  // TODO
         isRemote: true,
+        isHidden: remainder[0]==='.'
       });
     }
   });
@@ -295,7 +307,8 @@ function getAzureVirtualDirectoryEntries( account, azureParts ) {
       isHidden: false,
       size: 0,
       mtime: null,
-      entries: entries
+      entries: entries,
+      isRemote: true
     };
 }
 
@@ -439,7 +452,7 @@ app.get('/account/:name', function(req,res) {
 
 app.get('/partials/local/dir', function(req,res){
   var path = req.query.path;
-  try { 
+  try {
   var dir = getLocalDir(path);
   dir.layout = false;
     dir.entries.forEach(function(f){
@@ -447,6 +460,7 @@ app.get('/partials/local/dir', function(req,res){
       f.prettyDate = moment(new Date(f.mtime)).format('L');
       f.prettyName = prettyName(f.name);
     });
+    console.log("supports hidden files " + dir.supportsHiddenFiles);
     res.render('_partials/dir_listing', dir);
   } catch(error) {
     return;

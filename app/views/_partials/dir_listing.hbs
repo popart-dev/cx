@@ -1,3 +1,5 @@
+<button class="hiddenFiles btn btn-default">Show Hidden Files</button>
+
 <div class="fileDropRoot" data-path="{{path}}">
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -15,33 +17,62 @@
 					</thead>
 					<tbody>
 					{{#each entries}}
-						<tr>
+							<tr>
 							{{#if isDirectory}}
 								{{#unless isRoot}}
+									{{#if isRemote}}
+									<!-- NonRoot directories that are Remote:coming from Cloud -->
+											<td class="dir-entry dir" data-path="{{path}}" data-hiddenRemote="{{isHidden}}">
+									<span class="glyphicon glyphicon-folder-open"></span>
+									<a class="display-folder-name name" href="#" data-path="{{path}}" data-title="{{name}}" data-toggle="tooltip" title="{{name}}">{{prettyName}}</a></td>
+									<td class="dir-entry dir" data-path="{{path}}" data-hiddenRemote="{{isHidden}}"></td>
+									<td class="dir-entry dir" data-path="{{path}}" data-hiddenRemote="{{isHidden}}"></td>
+									<td class="dir-entry dir" data-path="{{path}}" data-hiddenRemote="{{isHidden}}"></td>
+									{{else}}
+									<!-- NonRoot directories that are not Remote: coming from local machine -->
 									<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}">
 									<span class="glyphicon glyphicon-folder-open"></span>
 									<a class="display-folder-name name" href="#" data-path="{{path}}" data-title="{{name}}" data-toggle="tooltip" title="{{name}}">{{prettyName}}</a></td>
 									<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}"></td>
 									<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}"></td>
 									<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}"></td>
+									{{/if}}
 								{{else}}
+								<!-- Root directory that is Remote:coming from Cloud -->
+								{{#if isRemote}}
+									<tbody class="tablesorter-infoOnly">
+										<td class="dir-entry dir" data-path="{{path}}" data-hiddenRemote="{{isHidden}}">
+										<a class="display-folder-name" href="#" data-title="" data-path="{{path}}">{{name}}</a></td>
+									</tbody>
+								{{else}}
+								<!--Root directory that is not Remote: coming from local machine   -->
 									<tbody class="tablesorter-infoOnly">
 										<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}">
 										<a class="display-folder-name" href="#" data-title="" data-path="{{path}}">{{name}}</a></td>
 									</tbody>
+									{{/if}}
 								{{/unless}}
 							{{else}}
-								<td class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}" data-blobsize="{{size}}">
+							<!-- NonDirectory files that are Remote:coming from Cloud -->
 								{{#if isRemote}}
-									<a href="{{url}}" class="name" data-toggle="tooltip" data-title="{{name}}" title="{{name}}">{{prettyName}}</a></td>
+								<td class="dir-entry file" data-path="{{path}}" data-hiddenRemote="{{isHidden}}" data-blobsize="{{size}}">
+										<a href="{{url}}" class="name" data-toggle="tooltip" data-title="{{name}}" title="{{name}}">{{prettyName}}</a></td>
+									<td data-hiddenRemote="{{isHidden}}" ><span class="modified">{{prettyDate}}</span></td>
+									<td data-hiddenRemote="{{isHidden}}" data-text="{{size}}" >{{prettySize}}</td>
+									<td data-hiddenRemote="{{isHidden}}"><a href="#" data-path="{{path}}" data-action="delete">
+									<span class="glyphicon glyphicon-remove"></span>
+									</a></td>
+
 								{{else}}
-									<a href="#" class="name" data-toggle="tooltip" data-title="{{name}}" title="{{name}}">{{prettyName}}</a></td>
+								<!-- NonDirecotry files that are not Remote: coming from local machine  -->
+									<td class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}" data-blobsize="{{size}}">
+										<a href="{{url}}" class="name" data-toggle="tooltip" data-title="{{name}}" title="{{name}}">{{prettyName}}</a></td>
+									<td data-hidden="{{isHidden}}" ><span class="modified">{{prettyDate}}</span></td>
+									<td data-hidden="{{isHidden}}" data-text="{{size}}" >{{prettySize}}</td>
+									<td data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}" data-action="delete">
+									<span class="glyphicon glyphicon-remove"></span>
+									</a></td>
 								{{/if}}
-								<td data-hidden="{{isHidden}}" ><span class="modified">{{prettyDate}}</span></td>
-								<td data-hidden="{{isHidden}}" data-text="{{size}}" >{{prettySize}}</td>
-								<td data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}" data-action="delete">
-								<span class="glyphicon glyphicon-remove"></span>
-								</a></td>
 							{{/if}}
 						</tr>
 					{{/each}}
@@ -56,11 +87,33 @@
  		var table = $("table").find('tr');
     $("table").tablesorter();
 		$('[data-hidden="true"]').hide();
+		$('[data-hiddenRemote="true"]').hide();
 
-		if (navigator.platform.substring(0,3)=="Win"){
-			$('button.hiddenFiles').hide();
-			$('#azureStorage').css("padding-top", 0);
-		};
+			$('#azureStorage button').click(function(){
+			if($('[data-hiddenRemote="true"]').is(":hidden")){
+		  	$('#azureStorage button').text("Hide Hidden Files")
+			} else {
+			  $('#azureStorage button').text("Show Hidden Files")
+			}
+	  	$('[data-hiddenRemote="true"]').slideToggle();
+
+		});
+
+			$('#localFiles button').click(function(){
+			if($('[data-hidden="true"]').is(":hidden")){
+		  	$('#localFiles button').text("Hide Hidden Files")
+			} else {
+			  $('#localFiles button').text("Show Hidden Files")
+			}
+
+	  	$('[data-hidden="true"]').slideToggle();
+
+		});
+
+
+		// {{#unless supportsHiddenFiles}}
+		// 	$('button.hiddenFiles').hide();
+		// {{/unless}}
 
 		$('.name').each(function(){
 			if($(this).text() !== $(this).data('title')) {
