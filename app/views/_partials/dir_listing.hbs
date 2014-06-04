@@ -16,12 +16,11 @@
 						</tr>
 					</thead>
 					<tbody>
-					{{#each entries}}
+						{{#each entries}}
 							<tr>
 								{{#if isDirectory}}
 									{{#unless isRoot}}
-						<!-- NonRemote files -->
-						<!-- NonRoot directories that are not Remote: coming from local machine -->
+									<!-- NonRoot directories  -->
 									<td class="dir-entry dir" data-remote="{{isRemote}}" data-path="{{path}}" data-hidden="{{isHidden}}">
 									<span class="glyphicon glyphicon-folder-open"></span>
 									<a class="display-folder-name name" href="#"  data-remote="{{isRemote}}" data-path="{{path}}" data-title="{{name}}" data-toggle="tooltip" title="{{name}}">{{prettyName}}</a></td>
@@ -29,15 +28,14 @@
 									<td class="dir-entry dir" data-remote="{{isRemote}}" data-path="{{path}}" data-hidden="{{isHidden}}"></td>
 									<td class="dir-entry dir" data-remote="{{isRemote}}" data-path="{{path}}" data-hidden="{{isHidden}}"></td>
 									{{else}}
-								<!--Root directory that is not Remote: coming from local machine   -->
+									<!--Root directory -->
 									<tbody class="tablesorter-infoOnly">
 										<td class="dir-entry dir" data-remote="{{isRemote}}" data-path="{{path}}" data-hidden="{{isHidden}}">
 										<a class="display-folder-name" href="#" data-title="" data-path="{{path}}">{{name}}</a></td>
 									</tbody>
 									{{/unless}}
 								{{else}}
-
-								<!-- NonDirecotry files that are not Remote: coming from local machine  -->
+									<!-- NonDirecotry files  -->
 									<td class="dir-entry file" data-remote="{{isRemote}}" data-path="{{path}}" data-hidden="{{isHidden}}" data-blobsize="{{size}}">
 										<a href="{{url}}" class="name" data-toggle="tooltip" data-title="{{name}}" title="{{name}}">{{prettyName}}</a></td>
 									<td data-hidden="{{isHidden}}" data-remote="{{isRemote}}" ><span class="modified">{{prettyDate}}</span></td>
@@ -46,10 +44,10 @@
 									<span class="glyphicon glyphicon-remove"></span>
 									</a></td>
 
-							{{/if}}
-						</tr>
-					{{/each}}
-				</tbody>
+								{{/if}}
+							</tr>
+						{{/each}}
+					</tbody>
 			</table>
 		</div>
 	</div>
