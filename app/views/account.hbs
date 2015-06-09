@@ -1,14 +1,13 @@
 <div class="row">
 	<div class="col-md-6 dirContainer">
 		<h2>Local Files</h2>
-		<button class="hiddenFiles btn btn-default">Show Hidden Files</button>
 		<div id="localFiles" class="dirContent">
 		</div>
 	</div>
 	<div class="col-md-6 dirContainer">
 		<h2>Azure Storage</h2>
 		<div id="azureStorage" class="dirContent">
-			
+
 		</div>
 		<div id="spinner" class="spinner" style="display:none;">
    			<img id="img-spinner" src="/img/spinner.gif" alt="Loading"/>
@@ -90,17 +89,19 @@
 	}
 
 	function refreshLocal(path) {
-				if( !path ) path = '~';
-
-		$('#localFiles').load( '/partials/local/dir?path=' + encodeURIComponent(path), null, function() {
+		if( !path ) path = '~';
+		$.ajax('/partials/local/dir?path=' + encodeURIComponent(path),{success: function(data) {
+			$("#localFiles").html(data);
 			refreshDragDrop();
-		} );
+			$('[data-remote=""][data-hidden="true"]').hide();
+		} });
 	}
 
 	function refreshAzure(path) {
 		if( !path ) path = '/';
 		$('#azureStorage').load( '/partials/azure/dir?path=' + encodeURIComponent(path), null, function() {
 			refreshDragDrop();
+			$('[data-remote="true"][data-hidden="true"]').hide();
 		} );
 	}
 
@@ -109,6 +110,24 @@
 
 		refreshLocal();
 		refreshAzure();
+
+		$('#azureStorage').on('click','button',function(){
+			if($('[data-remote="true"][data-hidden="true"]').is(":hidden")){
+		  	$('#azureStorage button').text("Hide Hidden Files")
+			} else {
+			  $('#azureStorage button').text("Show Hidden Files")
+			}
+			$('[data-remote="true"][data-hidden="true"]').slideToggle();
+		});
+
+		$('#localFiles').on('click','button',function(){
+			if($('[data-remote=""][data-hidden="true"]').is(":hidden")){
+		  	$('#localFiles button').text("Hide Hidden Files")
+			} else {
+			  $('#localFiles button').text("Show Hidden Files")
+			}
+			$('[data-remote=""][data-hidden="true"]').slideToggle();
+		});
 
 		$('#localFiles').on('click','a',function(){
 			var path = $(this).data('path');
@@ -139,9 +158,9 @@
 				if( confirm('This will delete your file from your computer and cannot be reversed. Are you sure?')) {
 					console.log( 'deleting ' + path );
 					if( path ) {
-						$.ajax( '/api/local/delete?path=' + encodeURIComponent(path), { 
+						$.ajax( '/api/local/delete?path=' + encodeURIComponent(path), {
 							success:function(){
-								refreshLocal( $root.data('path')); 			
+								refreshLocal( $root.data('path'));
 							},
 							completed:function(){
 								alert('hello hello');
@@ -152,15 +171,6 @@
 			} else {
 				if( path ) refreshLocal(path);
 			}
-		});
-
-		$('.hiddenFiles').click(function(){
-			if($('[data-hidden="true"]').is(":hidden")){
-		  	$(".hiddenFiles").text("Hide Hidden Files")
-			} else {
-			  $(".hiddenFiles").text("Show Hidden Files")
-			}
-	  	$('[data-hidden="true"]').slideToggle();
 		});
 
 		$('.refresh-azure').click(function(){

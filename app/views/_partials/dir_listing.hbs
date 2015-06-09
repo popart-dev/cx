@@ -1,6 +1,8 @@
+<button class="hiddenFiles btn btn-default">Show Hidden Files</button>
+
 <div class="fileDropRoot" data-path="{{path}}">
 	<div class="panel panel-default">
-		<div class="panel-heading">	
+		<div class="panel-heading">
 			<div class="dir-header">{{path}}</div>
 		</div>
 			<div class="dir-entries white">
@@ -14,38 +16,38 @@
 						</tr>
 					</thead>
 					<tbody>
-					{{#each entries}}
-						<tr>
-							{{#if isDirectory}}
-								{{#unless isRoot}}
-									<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}">
+						{{#each entries}}
+							<tr>
+								{{#if isDirectory}}
+									{{#unless isRoot}}
+									<!-- NonRoot directories  -->
+									<td class="dir-entry dir" data-remote="{{isRemote}}" data-path="{{path}}" data-hidden="{{isHidden}}">
 									<span class="glyphicon glyphicon-folder-open"></span>
-									<a class="display-folder-name name" href="#" data-path="{{path}}" data-title="{{name}}" data-toggle="tooltip" title="{{name}}">{{prettyName}}</a></td>
-									<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}"></td>
-									<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}"></td>
-									<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}"></td>
-								{{else}}
+									<a class="display-folder-name name" href="#"  data-remote="{{isRemote}}" data-path="{{path}}" data-title="{{name}}" data-toggle="tooltip" title="{{name}}">{{prettyName}}</a></td>
+									<td class="dir-entry dir" data-remote="{{isRemote}}" data-path="{{path}}" data-hidden="{{isHidden}}"></td>
+									<td class="dir-entry dir" data-remote="{{isRemote}}" data-path="{{path}}" data-hidden="{{isHidden}}"></td>
+									<td class="dir-entry dir" data-remote="{{isRemote}}" data-path="{{path}}" data-hidden="{{isHidden}}"></td>
+									{{else}}
+									<!--Root directory -->
 									<tbody class="tablesorter-infoOnly">
-										<td class="dir-entry dir" data-path="{{path}}" data-hidden="{{isHidden}}">
+										<td class="dir-entry dir" data-remote="{{isRemote}}" data-path="{{path}}" data-hidden="{{isHidden}}">
 										<a class="display-folder-name" href="#" data-title="" data-path="{{path}}">{{name}}</a></td>
 									</tbody>
-								{{/unless}}
-							{{else}}
-								<td class="dir-entry file" data-path="{{path}}" data-hidden="{{isHidden}}" data-blobsize="{{size}}">
-								{{#if isRemote}}
-									<a href="{{url}}" class="name" data-toggle="tooltip" data-title="{{name}}" title="{{name}}">{{prettyName}}</a></td>
+									{{/unless}}
 								{{else}}
-									<a href="#" class="name" data-toggle="tooltip" data-title="{{name}}" title="{{name}}">{{prettyName}}</a></td>
+									<!-- NonDirecotry files  -->
+									<td class="dir-entry file" data-remote="{{isRemote}}" data-path="{{path}}" data-hidden="{{isHidden}}" data-blobsize="{{size}}">
+										<a href="{{url}}" class="name" data-toggle="tooltip" data-title="{{name}}" title="{{name}}">{{prettyName}}</a></td>
+									<td data-hidden="{{isHidden}}" data-remote="{{isRemote}}" ><span class="modified">{{prettyDate}}</span></td>
+									<td data-hidden="{{isHidden}}" data-remote="{{isRemote}}" data-text="{{size}}" >{{prettySize}}</td>
+									<td data-hidden="{{isHidden}}" data-remote="{{isRemote}}" ><a href="#"  data-remote="{{isRemote}}" data-path="{{path}}" data-action="delete">
+									<span class="glyphicon glyphicon-remove"></span>
+									</a></td>
+
 								{{/if}}
-								<td data-hidden="{{isHidden}}" ><span class="modified">{{prettyDate}}</span></td>
-								<td data-hidden="{{isHidden}}" data-text="{{size}}" >{{prettySize}}</td>
-								<td data-hidden="{{isHidden}}"><a href="#" data-path="{{path}}" data-action="delete">
-								<span class="glyphicon glyphicon-remove"></span>
-								</a></td>
-							{{/if}}
-						</tr>
-					{{/each}}
-				</tbody>
+							</tr>
+						{{/each}}
+					</tbody>
 			</table>
 		</div>
 	</div>
@@ -55,10 +57,15 @@
 	$(document).ready(function() {
  		var table = $("table").find('tr');
     $("table").tablesorter();
-		$('[data-hidden="true"]').hide();
-		$('.name').each(function(){ 
+
+		{{#unless supportsHiddenFiles}}
+			$('#localFiles button').hide();
+			$('#localFiles').css("padding-top", 38)
+		{{/unless}}
+
+		$('.name').each(function(){
 			if($(this).text() !== $(this).data('title')) {
-				$(this).tooltip(); 
+				$(this).tooltip();
 			}
 		});
 	});
