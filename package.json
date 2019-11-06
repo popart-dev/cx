@@ -31,7 +31,7 @@
     "async": "~0.2",
     "glob": "3.x",
     "express": "^4.3.0",
-    "semver": "1.x",
+    "semver": "6.x",
     "handlebars": "1.x",
     "azure": "~0.7",
     "nomnom": "~1",
